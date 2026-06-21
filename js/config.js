@@ -19,7 +19,7 @@ const CONFIG = {
 
   SITE_NAME: 'Prestige Homes',
   SITE_TAGLINE: 'Luxury Real Estate',
-  SITE_URL: 'https://prestige-homes-demo.netlify.app',  // Update after deployment
+  SITE_URL: 'https://prestigehomesrealtor.netlify.app',  // Update after deployment
 
   // NOTE: The crypto payment workflow is the ONLY demonstrative
   // system in this project. All other integrations (Supabase Auth,

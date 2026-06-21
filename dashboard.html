@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Dashboard | Prestige Homes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/navbar.css" />
+  <link rel="stylesheet" href="css/footer.css" />
+  <link rel="stylesheet" href="css/property-card.css" />
+  <link rel="stylesheet" href="css/simple-page.css" />
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230F172A'/><text y='.9em' font-size='70' x='12'>🏛</text></svg>" />
+</head>
+
+<body>
+
+  <div id="navbar-container"></div>
+
+  <main class="simple-page">
+    <div class="simple-header">
+      <span class="section-eyebrow">Welcome Back</span>
+      <h1 id="dashboard-greeting">My Dashboard</h1>
+      <p>Your activity, saved properties, and account overview — all in one place.</p>
+    </div>
+
+    <div class="dashboard-content">
+      <div class="dashboard-grid">
+
+        <!-- Sidebar -->
+        <aside class="dashboard-sidebar">
+          <div class="dashboard-profile">
+            <div class="avatar avatar-2xl" id="profile-avatar" aria-hidden="true">U</div>
+            <div>
+              <div style="font-weight:700;color:var(--color-primary);" id="profile-name">Guest User</div>
+              <div style="font-size:var(--text-xs);color:var(--gray-400);" id="profile-email">Not signed in</div>
+            </div>
+          </div>
+          <nav class="dashboard-nav">
+            <a href="dashboard.html" class="dashboard-nav-item active"><i class="fa-solid fa-gauge"></i> Overview</a>
+            <a href="saved.html" class="dashboard-nav-item"><i class="fa-regular fa-heart"></i> Saved Listings</a>
+            <a href="applications.html" class="dashboard-nav-item"><i class="fa-regular fa-file-lines"></i> My
+              Applications</a>
+            <a href="tours.html" class="dashboard-nav-item"><i class="fa-regular fa-calendar"></i> Booked Tours</a>
+            <a href="search.html" class="dashboard-nav-item"><i class="fa-solid fa-magnifying-glass"></i> Browse
+              Properties</a>
+          </nav>
+        </aside>
+
+        <!-- Main -->
+        <section class="dashboard-main">
+          <h2 style="margin-top:0;border:none;padding-bottom:0;">Account Overview</h2>
+
+          <div class="dashboard-stat-row">
+            <div class="dashboard-stat">
+              <div class="dashboard-stat-value" id="stat-saved">0</div>
+              <div class="dashboard-stat-label">Saved Properties</div>
+            </div>
+            <div class="dashboard-stat">
+              <div class="dashboard-stat-value">0</div>
+              <div class="dashboard-stat-label">Active Applications</div>
+            </div>
+            <div class="dashboard-stat">
+              <div class="dashboard-stat-value">0</div>
+              <div class="dashboard-stat-label">Upcoming Tours</div>
+            </div>
+          </div>
+
+          <h2>Recently Viewed</h2>
+          <div class="property-grid" id="dashboard-recent-grid" style="margin-bottom:var(--space-6);"></div>
+
+          <div class="empty-state hidden" id="dashboard-empty" style="padding:var(--space-10);">
+            <div class="empty-state-icon"><i class="fa-solid fa-house-circle-check"></i></div>
+            <h3 class="empty-state-title">Start Exploring</h3>
+            <p class="empty-state-text">Browse our curated collection of luxury properties to get started.</p>
+            <a href="search.html" class="btn btn-primary"><i class="fa-solid fa-magnifying-glass"></i> Browse
+              Properties</a>
+          </div>
+
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <div id="footer-container"></div>
+  <button class="back-to-top hidden" id="back-to-top" aria-label="Back to top"><i
+      class="fa-solid fa-chevron-up"></i></button>
+  <div class="toast-container" id="toast-container" aria-live="polite"></div>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/config.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/components.js"></script>
+  <script>
+    'use strict';
+    document.addEventListener('DOMContentLoaded', async () => {
+      initSupabase();
+      const user = await getCurrentUser();
+
+      if (user) {
+        const name = user.user_metadata?.full_name || user.email?.split('@')[0] || 'User';
+        document.getElementById('dashboard-greeting').textContent = `Welcome, ${name.split(' ')[0]}`;
+        document.getElementById('profile-name').textContent = name;
+        document.getElementById('profile-email').textContent = user.email;
+        document.getElementById('profile-avatar').textContent = (user.email?.[0] || 'U').toUpperCase();
+      }
+
+      // Stats
+      document.getElementById('stat-saved').textContent = Saved.count();
+
+      // Recently viewed
+      const recent = RecentlyViewed.getAll();
+      const grid = document.getElementById('dashboard-recent-grid');
+      const empty = document.getElementById('dashboard-empty');
+
+      if (recent.length === 0) {
+        grid.style.display = 'none';
+        show(empty);
+      } else {
+        const properties = recent
+          .map(r => CONFIG.DUMMY_PROPERTIES.find(p => p.id === r.id))
+          .filter(Boolean);
+        grid.innerHTML = properties.map((p, i) => renderPropertyCard(p, { delay: i * 80 })).join('');
+        setTimeout(initScrollReveal, 50);
+      }
+    });
+  </script>
+</body>
+
+</html>

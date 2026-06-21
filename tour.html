@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book a Tour | Prestige Homes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/navbar.css" />
+  <link rel="stylesheet" href="css/footer.css" />
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230F172A'/><text y='.9em' font-size='70' x='12'>🏛</text></svg>" />
+  <style>
+    .tour-page {
+      padding-top: var(--navbar-height);
+      min-height: 100vh;
+      background: var(--gray-50);
+    }
+
+    .tour-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: var(--space-10) var(--space-6);
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: var(--space-8);
+      align-items: start;
+    }
+
+    /* Steps indicator */
+    .tour-steps {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      margin-bottom: var(--space-10);
+    }
+
+    .tour-step {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: var(--text-sm);
+    }
+
+    .tour-step-num {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: var(--weight-bold);
+      font-size: var(--text-xs);
+      border: 2px solid var(--border-color);
+      color: var(--gray-400);
+      transition: all var(--transition-base);
+    }
+
+    .tour-step.active .tour-step-num {
+      background: var(--color-secondary);
+      border-color: var(--color-secondary);
+      color: var(--color-primary);
+    }
+
+    .tour-step.done .tour-step-num {
+      background: var(--color-success);
+      border-color: var(--color-success);
+      color: white;
+    }
+
+    .tour-step-label {
+      font-weight: var(--weight-medium);
+      color: var(--gray-400);
+    }
+
+    .tour-step.active .tour-step-label {
+      color: var(--color-primary);
+    }
+
+    .tour-step-sep {
+      flex: 1;
+      height: 2px;
+      background: var(--border-color);
+      max-width: 60px;
+    }
+
+    .tour-step-sep.done {
+      background: var(--color-success);
+    }
+
+    /* Card */
+    .tour-card {
+      background: var(--color-white);
+      border-radius: var(--radius-3xl);
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-card);
+      overflow: hidden;
+    }
+
+    .tour-card-header {
+      background: var(--color-primary);
+      padding: var(--space-8);
+    }
+
+    .tour-card-title {
+      font-family: var(--font-display);
+      font-size: var(--text-3xl);
+      font-weight: var(--weight-bold);
+      color: white;
+      margin-bottom: var(--space-2);
+    }
+
+    .tour-card-sub {
+      color: rgba(255, 255, 255, 0.55);
+      font-size: var(--text-sm);
+    }
+
+    .tour-card-body {
+      padding: var(--space-8);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-6);
+    }
+
+    /* Property summary mini-card */
+    .property-mini-card {
+      display: flex;
+      gap: var(--space-4);
+      background: var(--gray-50);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+    }
+
+    .property-mini-img {
+      width: 100px;
+      height: 80px;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .property-mini-info {
+      padding: var(--space-3) var(--space-3) var(--space-3) 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: var(--space-1);
+    }
+
+    .property-mini-address {
+      font-weight: var(--weight-semibold);
+      font-size: var(--text-sm);
+      color: var(--color-primary);
+      line-height: var(--leading-snug);
+    }
+
+    .property-mini-price {
+      font-size: var(--text-sm);
+      color: var(--color-secondary-dark);
+      font-weight: var(--weight-semibold);
+    }
+
+    .property-mini-type {
+      font-size: var(--text-xs);
+      color: var(--gray-400);
+    }
+
+    /* Fee breakdown */
+    .fee-breakdown {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+
+    .fee-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: var(--text-sm);
+      padding: var(--space-2) 0;
+      border-bottom: 1px dashed var(--border-color);
+    }
+
+    .fee-row:last-child {
+      border-bottom: none;
+      font-weight: var(--weight-bold);
+      font-size: var(--text-base);
+      color: var(--color-primary);
+    }
+
+    .fee-row:last-child .fee-value {
+      color: var(--color-secondary-dark);
+    }
+
+    /* Crypto selector */
+    .crypto-tabs {
+      display: flex;
+      gap: var(--space-2);
+    }
+
+    .crypto-tab {
+      flex: 1;
+      padding: var(--space-3);
+      border-radius: var(--radius-xl);
+      border: 2px solid var(--border-color);
+      text-align: center;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      background: var(--color-white);
+    }
+
+    .crypto-tab:hover {
+      border-color: var(--gray-300);
+    }
+
+    .crypto-tab.active {
+      border-color: var(--color-secondary);
+      background: var(--color-secondary-muted);
+    }
+
+    .crypto-tab-icon {
+      font-size: 1.5rem;
+      margin-bottom: var(--space-1);
+    }
+
+    .crypto-tab-name {
+      font-size: var(--text-xs);
+      font-weight: var(--weight-semibold);
+      color: var(--gray-700);
+    }
+
+    .crypto-tab-amount {
+      font-size: var(--text-xs);
+      color: var(--gray-500);
+      margin-top: 2px;
+    }
+
+    .crypto-tab.active .crypto-tab-name {
+      color: var(--color-secondary-dark);
+    }
+
+    /* Wallet display */
+    .wallet-display {
+      background: var(--gray-50);
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-xl);
+      padding: var(--space-4);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+
+    .wallet-label {
+      font-size: var(--text-xs);
+      font-weight: var(--weight-semibold);
+      letter-spacing: var(--tracking-wide);
+      text-transform: uppercase;
+      color: var(--gray-500);
+    }
+
+    .wallet-address-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      background: var(--color-white);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: var(--space-3);
+    }
+
+    .wallet-address {
+      font-family: monospace;
+      font-size: var(--text-xs);
+      color: var(--color-primary);
+      flex: 1;
+      word-break: break-all;
+    }
+
+    .copy-btn {
+      flex-shrink: 0;
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-md);
+      background: var(--color-primary);
+      color: var(--color-white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border: none;
+      font-size: var(--text-sm);
+      transition: all var(--transition-fast);
+    }
+
+    .copy-btn:hover {
+      background: var(--color-secondary);
+      color: var(--color-primary);
+    }
+
+    /* QR Placeholder */
+    .qr-placeholder {
+      width: 160px;
+      height: 160px;
+      margin: 0 auto;
+      background: var(--color-white);
+      border: 2px solid var(--border-color);
+      border-radius: var(--radius-xl);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+    }
+
+    .qr-placeholder i {
+      font-size: 4rem;
+      color: var(--color-primary);
+    }
+
+    .qr-placeholder-label {
+      font-size: var(--text-xs);
+      color: var(--gray-400);
+      text-align: center;
+    }
+
+    /* Countdown */
+    .countdown-bar {
+      background: var(--color-warning-light);
+      border: 1px solid rgba(245, 158, 11, 0.25);
+      border-radius: var(--radius-xl);
+      padding: var(--space-4);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-4);
+    }
+
+    .countdown-bar.urgent {
+      background: var(--color-danger-light);
+      border-color: rgba(220, 38, 38, 0.25);
+    }
+
+    .countdown-label {
+      font-size: var(--text-sm);
+      color: var(--gray-700);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .countdown-time {
+      font-family: var(--font-display);
+      font-size: var(--text-2xl);
+      font-weight: var(--weight-bold);
+      color: var(--color-warning);
+      letter-spacing: 2px;
+    }
+
+    .countdown-bar.urgent .countdown-time {
+      color: var(--color-danger);
+      animation: pulse 1s ease-in-out infinite;
+    }
+
+    /* Summary card (right col) */
+    .tour-summary {
+      background: var(--color-white);
+      border-radius: var(--radius-3xl);
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-card);
+      padding: var(--space-8);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-5);
+      position: sticky;
+      top: calc(var(--navbar-height-scrolled) + var(--space-4));
+    }
+
+    .summary-title {
+      font-family: var(--font-display);
+      font-size: var(--text-xl);
+      font-weight: var(--weight-bold);
+      color: var(--color-primary);
+    }
+
+    .summary-item {
+      display: flex;
+      gap: var(--space-3);
+      align-items: flex-start;
+    }
+
+    .summary-item-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-lg);
+      background: var(--color-secondary-muted);
+      color: var(--color-secondary-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--text-sm);
+      flex-shrink: 0;
+    }
+
+    .summary-item-label {
+      font-size: var(--text-xs);
+      color: var(--gray-400);
+      margin-bottom: 2px;
+    }
+
+    .summary-item-value {
+      font-size: var(--text-sm);
+      font-weight: var(--weight-semibold);
+      color: var(--color-primary);
+    }
+
+    /* Success state */
+    .payment-success {
+      text-align: center;
+      padding: var(--space-10) var(--space-8);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-5);
+    }
+
+    .success-icon {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: var(--color-success-light);
+      color: var(--color-success);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+    }
+
+    .success-title {
+      font-family: var(--font-display);
+      font-size: var(--text-3xl);
+      font-weight: var(--weight-bold);
+      color: var(--color-primary);
+    }
+
+    .success-text {
+      font-size: var(--text-base);
+      color: var(--gray-500);
+      line-height: var(--leading-relaxed);
+      max-width: 440px;
+    }
+
+    /* Pending state */
+    .payment-pending {
+      text-align: center;
+      padding: var(--space-8);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-4);
+    }
+
+    .pending-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: var(--color-warning-light);
+      color: var(--color-warning);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @media (max-width: 900px) {
+      .tour-container {
+        grid-template-columns: 1fr;
+      }
+
+      .tour-summary {
+        position: static;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="navbar-container"></div>
+
+  <main class="tour-page">
+
+    <!-- Steps -->
+    <div style="max-width:1100px;margin:0 auto;padding:var(--space-8) var(--space-6) 0;">
+      <div class="tour-steps">
+        <div class="tour-step active" id="step-1">
+          <div class="tour-step-num">1</div>
+          <span class="tour-step-label">Tour Details</span>
+        </div>
+        <div class="tour-step-sep" id="sep-1"></div>
+        <div class="tour-step" id="step-2">
+          <div class="tour-step-num">2</div>
+          <span class="tour-step-label">Payment</span>
+        </div>
+        <div class="tour-step-sep" id="sep-2"></div>
+        <div class="tour-step" id="step-3">
+          <div class="tour-step-num">3</div>
+          <span class="tour-step-label">Confirmed</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tour-container">
+
+      <!-- LEFT: Main flow -->
+      <div>
+
+        <!-- STEP 1: Tour Info -->
+        <div id="view-details" class="tour-card fade-in">
+          <div class="tour-card-header">
+            <div class="tour-card-title">Book a Private Tour</div>
+            <div class="tour-card-sub">Your exclusive viewing experience, scheduled around you</div>
+          </div>
+          <div class="tour-card-body">
+
+            <!-- Property mini card -->
+            <div>
+              <p class="luxury-label" style="margin-bottom:var(--space-3);">Selected Property</p>
+              <div class="property-mini-card" id="property-mini-card"></div>
+            </div>
+
+            <!-- Tour info -->
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4);">
+              <div class="form-group">
+                <label class="form-label" for="tour-date">Preferred Date <span class="required">*</span></label>
+                <input type="date" class="form-input" id="tour-date" required />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="tour-time">Preferred Time <span class="required">*</span></label>
+                <select class="form-select" id="tour-time" required>
+                  <option value="">Select time</option>
+                  <option>9:00 AM</option>
+                  <option>10:00 AM</option>
+                  <option>11:00 AM</option>
+                  <option>12:00 PM</option>
+                  <option>1:00 PM</option>
+                  <option>2:00 PM</option>
+                  <option>3:00 PM</option>
+                  <option>4:00 PM</option>
+                  <option>5:00 PM</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="tour-name">Full Name <span class="required">*</span></label>
+              <div class="input-wrapper">
+                <i class="fa-regular fa-user input-icon"></i>
+                <input type="text" class="form-input with-icon-left" id="tour-name" placeholder="Your full name"
+                  autocomplete="name" required />
+              </div>
+            </div>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4);">
+              <div class="form-group">
+                <label class="form-label" for="tour-email">Email <span class="required">*</span></label>
+                <div class="input-wrapper">
+                  <i class="fa-regular fa-envelope input-icon"></i>
+                  <input type="email" class="form-input with-icon-left" id="tour-email" placeholder="your@email.com"
+                    autocomplete="email" required />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="tour-phone">Phone</label>
+                <div class="input-wrapper">
+                  <i class="fa-solid fa-phone input-icon"></i>
+                  <input type="tel" class="form-input with-icon-left" id="tour-phone" placeholder="+1 (555) 000-0000"
+                    autocomplete="tel" />
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="tour-notes">Additional Notes</label>
+              <textarea class="form-input form-textarea" id="tour-notes"
+                placeholder="Any accessibility needs, specific rooms to view, questions for the agent…"
+                rows="3"></textarea>
+            </div>
+
+            <!-- Fee Breakdown -->
+            <div
+              style="background:var(--gray-50);border:1px solid var(--border-color);border-radius:var(--radius-xl);padding:var(--space-5);">
+              <p class="luxury-label" style="margin-bottom:var(--space-4);">Fee Breakdown</p>
+              <div class="fee-breakdown">
+                <div class="fee-row"><span>Tour Booking Fee</span><span class="fee-value">$40.00</span></div>
+                <div class="fee-row"><span>Agent Preparation</span><span class="fee-value">$35.00</span></div>
+                <div class="fee-row"><span>Platform Processing</span><span class="fee-value">$15.00</span></div>
+                <div class="fee-row"><span><strong>Total Due Today</strong></span><span class="fee-value"><strong>
+                      $90.00</strong></span></div>
+              </div>
+              <p
+                style="font-size:var(--text-xs);color:var(--gray-400);margin-top:var(--space-3);line-height:var(--leading-relaxed);">
+                <i class="fa-solid fa-circle-info"></i>
+                This fee is fully credited toward your purchase or first month's rent if you proceed.
+                <strong>Crypto payment only</strong> — we accept BTC, ETH, and BNB.
+              </p>
+            </div>
+
+            <button class="btn btn-primary btn-full btn-lg" onclick="goToPayment()">
+              <i class="fa-solid fa-lock"></i>
+              Continue to Secure Payment — $90
+            </button>
+
+          </div>
+        </div>
+
+        <!-- STEP 2: Payment -->
+        <div id="view-payment" class="tour-card fade-in" style="display:none;">
+          <div class="tour-card-header">
+            <div class="tour-card-title">Secure Payment</div>
+            <div class="tour-card-sub">Pay the tour fee using your preferred cryptocurrency</div>
+          </div>
+          <div class="tour-card-body">
+
+            <!-- Countdown -->
+            <div class="countdown-bar" id="countdown-bar">
+              <div class="countdown-label">
+                <i class="fa-regular fa-clock" aria-hidden="true"></i>
+                Order expires in:
+              </div>
+              <div class="countdown-time" id="countdown-display">30:00</div>
+            </div>
+
+            <!-- Crypto tabs -->
+            <div>
+              <p class="luxury-label" style="margin-bottom:var(--space-3);">Select Cryptocurrency</p>
+              <div class="crypto-tabs">
+                <div class="crypto-tab active" onclick="selectCrypto('BTC',this)">
+                  <div class="crypto-tab-icon">₿</div>
+                  <div class="crypto-tab-name">Bitcoin</div>
+                  <div class="crypto-tab-amount">0.00358 BTC</div>
+                </div>
+                <div class="crypto-tab" onclick="selectCrypto('ETH',this)">
+                  <div class="crypto-tab-icon">Ξ</div>
+                  <div class="crypto-tab-name">Ethereum</div>
+                  <div class="crypto-tab-amount">0.08492 ETH</div>
+                </div>
+                <div class="crypto-tab" onclick="selectCrypto('BNB',this)">
+                  <div class="crypto-tab-icon">🔶</div>
+                  <div class="crypto-tab-name">BNB</div>
+                  <div class="crypto-tab-amount">0.42150 BNB</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Amount to send -->
+            <div
+              style="text-align:center;padding:var(--space-4);background:var(--color-secondary-muted);border:1px solid rgba(212,175,55,0.20);border-radius:var(--radius-xl);">
+              <p style="font-size:var(--text-xs);color:var(--gray-500);margin-bottom:var(--space-1);">EXACT AMOUNT TO
+                SEND</p>
+              <p class="text-shine" style="font-family:var(--font-display);font-size:var(--text-3xl);font-weight:700;"
+                id="crypto-amount-display">0.00358 BTC</p>
+              <p style="font-size:var(--text-xs);color:var(--gray-400);margin-top:var(--space-1);">≈ $90 USD</p>
+            </div>
+
+            <!-- QR Code placeholder -->
+            <div style="display:flex;flex-direction:column;align-items:center;gap:var(--space-3);">
+              <div class="qr-placeholder">
+                <i class="fa-solid fa-qrcode" aria-hidden="true"></i>
+                <div class="qr-placeholder-label">QR Code<br />loads here</div>
+              </div>
+              <p style="font-size:var(--text-xs);color:var(--gray-400);">Scan with your crypto wallet app</p>
+            </div>
+
+            <!-- Wallet address -->
+            <div class="wallet-display">
+              <div class="wallet-label">Send to wallet address</div>
+              <div class="wallet-address-row">
+                <span class="wallet-address" id="wallet-address-text">1PrEstiGeHmSzP9f4vK8UwcqJTHNuBd2xA</span>
+                <button class="copy-btn" onclick="copyWalletAddress()" aria-label="Copy wallet address">
+                  <i class="fa-regular fa-copy" aria-hidden="true"></i>
+                </button>
+              </div>
+              <p
+                style="font-size:var(--text-xs);color:var(--color-danger);display:flex;gap:var(--space-1);align-items:center;">
+                <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
+                Send ONLY <span id="wallet-coin-label">BTC</span> to this address. Sending other coins will result in
+                permanent loss.
+              </p>
+            </div>
+
+            <!-- Confirm payment button -->
+            <button class="btn btn-success btn-full btn-lg" onclick="confirmPayment()">
+              <i class="fa-solid fa-check-circle"></i>
+              I Have Made Payment
+            </button>
+
+            <button class="btn btn-ghost btn-full" onclick="goBack()">
+              <i class="fa-solid fa-arrow-left"></i> Back to Details
+            </button>
+
+          </div>
+        </div>
+
+        <!-- STEP 3: Pending -->
+        <div id="view-pending" class="tour-card fade-in" style="display:none;">
+          <div class="payment-pending">
+            <div class="pending-icon"><i class="fa-solid fa-clock-rotate-left" aria-hidden="true"></i></div>
+            <h2
+              style="font-family:var(--font-display);font-size:var(--text-3xl);font-weight:700;color:var(--color-primary);">
+              Payment Pending</h2>
+            <p style="color:var(--gray-500);line-height:var(--leading-relaxed);max-width:420px;text-align:center;">
+              We're waiting for blockchain confirmation. This typically takes
+              <strong>2–10 minutes</strong>. Once confirmed, your tour will be officially scheduled.
+            </p>
+            <div
+              style="display:flex;align-items:center;gap:var(--space-3);background:var(--gray-50);border:1px solid var(--border-color);border-radius:var(--radius-xl);padding:var(--space-4) var(--space-6);">
+              <div class="spinner" style="border-top-color:var(--color-secondary);"></div>
+              <span style="font-size:var(--text-sm);color:var(--gray-600);">Verifying transaction on the
+                blockchain…</span>
+            </div>
+            <button class="btn btn-primary btn-lg" onclick="sendTourEmail()" id="verify-btn">
+              <i class="fa-solid fa-rotate"></i> Check Payment Status
+            </button>
+            <p style="font-size:var(--text-xs);color:var(--gray-400);">Confirmation will trigger the tour request email.
+            </p>
+          </div>
+        </div>
+
+        <!-- STEP 3: Success -->
+        <div id="view-success" class="tour-card fade-in" style="display:none;">
+          <div class="payment-success">
+            <div class="success-icon"><i class="fa-solid fa-check" aria-hidden="true"></i></div>
+            <h2 class="success-title">Tour Confirmed! 🎉</h2>
+            <p class="success-text">
+              Your private tour has been successfully booked. A confirmation has been
+              sent to your email with full details, including the agent's contact
+              information and directions to the property.
+            </p>
+            <div
+              style="width:100%;background:var(--gray-50);border:1px solid var(--border-color);border-radius:var(--radius-xl);padding:var(--space-5);display:flex;flex-direction:column;gap:var(--space-3);">
+              <div style="display:flex;justify-content:space-between;font-size:var(--text-sm);">
+                <span style="color:var(--gray-500);">Booking Reference</span>
+                <strong style="color:var(--color-primary);" id="booking-ref">PH-XXXXXX</strong>
+              </div>
+              <div style="display:flex;justify-content:space-between;font-size:var(--text-sm);">
+                <span style="color:var(--gray-500);">Tour Date</span>
+                <strong style="color:var(--color-primary);" id="confirmed-date">—</strong>
+              </div>
+              <div style="display:flex;justify-content:space-between;font-size:var(--text-sm);">
+                <span style="color:var(--gray-500);">Tour Time</span>
+                <strong style="color:var(--color-primary);" id="confirmed-time">—</strong>
+              </div>
+              <div style="display:flex;justify-content:space-between;font-size:var(--text-sm);">
+                <span style="color:var(--gray-500);">Payment Status</span>
+                <span class="badge badge-success">Confirmed</span>
+              </div>
+            </div>
+            <div style="display:flex;gap:var(--space-3);width:100%;flex-wrap:wrap;">
+              <a href="index.html" class="btn btn-dark" style="flex:1;min-width:160px;">
+                <i class="fa-solid fa-house"></i> Back to Home
+              </a>
+              <a href="search.html" class="btn btn-ghost" style="flex:1;min-width:160px;">
+                <i class="fa-solid fa-magnifying-glass"></i> Browse More
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT: Summary -->
+      <div class="tour-summary">
+        <h3 class="summary-title">Tour Summary</h3>
+
+        <div id="tour-summary-property"
+          style="background:var(--gray-50);border-radius:var(--radius-xl);overflow:hidden;"></div>
+
+        <div style="display:flex;flex-direction:column;gap:var(--space-4);">
+          <div class="summary-item">
+            <div class="summary-item-icon"><i class="fa-solid fa-calendar-check" aria-hidden="true"></i></div>
+            <div>
+              <div class="summary-item-label">Tour Date & Time</div>
+              <div class="summary-item-value" id="summary-datetime">Not selected yet</div>
+            </div>
+          </div>
+          <div class="summary-item">
+            <div class="summary-item-icon"><i class="fa-solid fa-user" aria-hidden="true"></i></div>
+            <div>
+              <div class="summary-item-label">Guest Name</div>
+              <div class="summary-item-value" id="summary-name">Not entered yet</div>
+            </div>
+          </div>
+          <div class="summary-item">
+            <div class="summary-item-icon"><i class="fa-solid fa-coins" aria-hidden="true"></i></div>
+            <div>
+              <div class="summary-item-label">Tour Fee</div>
+              <div class="summary-item-value"> $90 USD (Crypto)</div>
+            </div>
+          </div>
+          <div class="summary-item">
+            <div class="summary-item-icon"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i></div>
+            <div>
+              <div class="summary-item-label">Refund Policy</div>
+              <div class="summary-item-value" style="font-weight:400;color:var(--gray-500);font-size:var(--text-xs);">
+                Fee credited toward purchase/lease. Non-refundable for cancellations.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          style="background:var(--color-secondary-muted);border:1px solid rgba(212,175,55,0.20);border-radius:var(--radius-xl);padding:var(--space-4);">
+          <div style="display:flex;align-items:center;gap:var(--space-2);margin-bottom:var(--space-2);">
+            <i class="fa-solid fa-star" style="color:var(--color-secondary);" aria-hidden="true"></i>
+            <strong style="font-size:var(--text-sm);color:var(--color-primary);">What to Expect</strong>
+          </div>
+          <ul
+            style="font-size:var(--text-xs);color:var(--gray-600);line-height:var(--leading-loose);list-style:disc;padding-left:var(--space-4);">
+            <li>Private viewing with a senior agent</li>
+            <li>Full property walkthrough</li>
+            <li>Q&A session with the listing agent</li>
+            <li>Market analysis report provided</li>
+            <li>No pressure — take your time</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <div id="footer-container"></div>
+  <div class="toast-container" id="toast-container" aria-live="polite"></div>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/components.js"></script>
+  <script>
+    'use strict';
+
+    let tourProperty = null;
+    let selectedCrypto = 'BTC';
+    let countdownTimer = null;
+
+    // Tour form data is stored here when the user proceeds to payment
+    let tourFormData = {};
+
+    document.addEventListener('DOMContentLoaded', () => {
+      tourProperty = JSON.parse(sessionStorage.getItem('tour_property') || 'null');
+      if (!tourProperty) {
+        Toast.warning('No Property Selected', 'Please select a property first.');
+        setTimeout(() => window.location.href = 'search.html', 1500);
+        return;
+      }
+
+      renderPropertyMiniCard();
+
+      // Set min date to tomorrow
+      const tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      const dateInput = document.getElementById('tour-date');
+      if (dateInput) dateInput.min = tomorrow.toISOString().split('T')[0];
+
+      // Live-update the summary panel as the user types
+      document.getElementById('tour-date')?.addEventListener('change', updateSummary);
+      document.getElementById('tour-time')?.addEventListener('change', updateSummary);
+      document.getElementById('tour-name')?.addEventListener('input', updateSummary);
+
+      if (window.emailjs && CONFIG.EMAILJS_PUBLIC_KEY !== 'PASTE_YOUR_EMAILJS_PUBLIC_KEY_HERE') {
+        emailjs.init(CONFIG.EMAILJS_PUBLIC_KEY);
+      }
+    });
+
+    function renderPropertyMiniCard() {
+      const containers = ['property-mini-card', 'tour-summary-property'];
+      const html = `
+    <img class="property-mini-img"
+         src="${tourProperty.image || 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=400&auto=format'}"
+         alt="Property"/>
+    <div class="property-mini-info">
+      <div class="property-mini-address">${tourProperty.address || 'Property Address'}</div>
+      <div class="property-mini-price">${formatPrice(tourProperty.price, tourProperty.listingType)}</div>
+      <div class="property-mini-type">${tourProperty.type || 'Property'} &middot; ID: ${tourProperty.id}</div>
+    </div>
+  `;
+      containers.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.innerHTML = html;
+      });
+    }
+
+    function updateSummary() {
+      const date = document.getElementById('tour-date')?.value;
+      const time = document.getElementById('tour-time')?.value;
+      const name = document.getElementById('tour-name')?.value?.trim();
+      const dtEl = document.getElementById('summary-datetime');
+      const nameEl = document.getElementById('summary-name');
+      if (dtEl) {
+        if (date && time) {
+          const d = new Date(date + 'T12:00:00');
+          dtEl.textContent = d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' }) + ' at ' + time;
+        } else {
+          dtEl.textContent = 'Not selected yet';
+        }
+      }
+      if (nameEl) nameEl.textContent = name || 'Not entered yet';
+    }
+
+    function goToPayment() {
+      const date = document.getElementById('tour-date')?.value;
+      const time = document.getElementById('tour-time')?.value;
+      const name = document.getElementById('tour-name')?.value?.trim();
+      const email = document.getElementById('tour-email')?.value?.trim();
+      const phone = document.getElementById('tour-phone')?.value?.trim();
+      const notes = document.getElementById('tour-notes')?.value?.trim();
+
+      if (!date || !time) { Toast.error('Missing Fields', 'Please select a tour date and time.'); return; }
+      if (!name) { Toast.error('Missing Fields', 'Please enter your full name.'); return; }
+      if (!email || !email.includes('@')) { Toast.error('Invalid Email', 'Please enter a valid email address.'); return; }
+
+      // Persist form data for use after payment
+      tourFormData = { name, email, phone: phone || 'N/A', date, time, notes: notes || 'None' };
+      sessionStorage.setItem('tour_form_data', JSON.stringify(tourFormData));
+
+      // Advance steps
+      document.getElementById('step-1').classList.replace('active', 'done');
+      document.getElementById('step-1').querySelector('.tour-step-num').innerHTML = '<i class="fa-solid fa-check" style="font-size:12px;"></i>';
+      document.getElementById('sep-1').classList.add('done');
+      document.getElementById('step-2').classList.add('active');
+
+      document.getElementById('view-details').style.display = 'none';
+      document.getElementById('view-payment').style.display = 'block';
+
+      countdownTimer = new CountdownTimer({
+        minutes: CONFIG.PAYMENT_TIMER_MINUTES,
+        onTick: ({ minutes, seconds, totalSeconds }) => {
+          const disp = document.getElementById('countdown-display');
+          const bar = document.getElementById('countdown-bar');
+          if (disp) disp.textContent = String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0');
+          if (bar) bar.classList.toggle('urgent', totalSeconds < 300);
+        },
+        onExpire: () => {
+          const disp = document.getElementById('countdown-display');
+          const bar = document.getElementById('countdown-bar');
+          if (disp) disp.textContent = 'EXPIRED';
+          if (bar) bar.classList.add('urgent');
+          Toast.error('Session Expired', 'Your payment window has expired. Please restart the booking.');
+        },
+      });
+      countdownTimer.start();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function goBack() {
+      countdownTimer?.stop();
+      document.getElementById('step-1').className = 'tour-step active';
+      document.getElementById('step-1').querySelector('.tour-step-num').textContent = '1';
+      document.getElementById('sep-1').classList.remove('done');
+      document.getElementById('step-2').className = 'tour-step';
+      document.getElementById('view-payment').style.display = 'none';
+      document.getElementById('view-details').style.display = 'block';
+    }
+
+    function selectCrypto(coin, btn) {
+      selectedCrypto = coin;
+      document.querySelectorAll('.crypto-tab').forEach(t => t.classList.remove('active'));
+      btn.classList.add('active');
+      const amounts = { BTC: CONFIG.TOUR_FEE_BTC, ETH: CONFIG.TOUR_FEE_ETH, BNB: CONFIG.TOUR_FEE_BNB };
+      const addrEl = document.getElementById('wallet-address-text');
+      const amtEl = document.getElementById('crypto-amount-display');
+      const coinLbl = document.getElementById('wallet-coin-label');
+      if (addrEl) addrEl.textContent = CONFIG.WALLETS[coin];
+      if (amtEl) amtEl.textContent = amounts[coin] + ' ' + coin;
+      if (coinLbl) coinLbl.textContent = coin;
+    }
+
+    function copyWalletAddress() {
+      copyToClipboard(CONFIG.WALLETS[selectedCrypto], 'Address Copied!', selectedCrypto + ' wallet address copied to clipboard.');
+    }
+
+    function confirmPayment() {
+      countdownTimer?.stop();
+
+      document.getElementById('step-2').classList.replace('active', 'done');
+      document.getElementById('step-2').querySelector('.tour-step-num').innerHTML = '<i class="fa-solid fa-check" style="font-size:12px;"></i>';
+      document.getElementById('sep-2').classList.add('done');
+      document.getElementById('step-3').classList.add('active');
+
+      document.getElementById('view-payment').style.display = 'none';
+      document.getElementById('view-pending').style.display = 'block';
+      Toast.info('Payment Submitted', 'Confirming and sending your tour request email now\u2026');
+
+      // Restore form data in case page was reloaded
+      const saved = sessionStorage.getItem('tour_form_data');
+      if (saved) tourFormData = JSON.parse(saved);
+
+      // Send the real email after a brief moment (keeps the pending UX believable)
+      setTimeout(sendTourEmail, 2000);
+    }
+
+    async function sendTourEmail() {
+      const btn = document.getElementById('verify-btn');
+
+      if (!window.emailjs) {
+        showEmailError('Email service unavailable. The EmailJS library failed to load.');
+        return;
+      }
+      if (!isEmailJSConfigured()) {
+        showEmailError('Email service unavailable. EmailJS credentials have not been configured. Please contact the administrator.');
+        return;
+      }
+      if (!isEmailTemplateConfigured(CONFIG.EMAILJS_TEMPLATE_TOUR)) {
+        showEmailError('Email service unavailable. The tour email template (EMAILJS_TEMPLATE_TOUR) has not been configured in js/config.js. Please contact the administrator.');
+        return;
+      }
+
+      if (btn) { btn.classList.add('loading'); btn.disabled = true; }
+
+      const p = tourProperty;
+      const f = tourFormData;
+      const now = new Date().toLocaleString('en-US', { dateStyle: 'full', timeStyle: 'short' });
+
+      const emailParams = {
+        // Property Details
+        property_name: p.address || 'N/A',
+        property_address: p.address || 'N/A',
+        property_id: p.id || 'N/A',
+        property_price: formatPrice(p.price, p.listingType),
+        property_type: p.type || 'N/A',
+        listing_type: p.listingType === 'rent' ? 'For Rent' : 'For Sale',
+        // Applicant Details
+        applicant_name: f.name || 'N/A',
+        applicant_email: f.email || 'N/A',
+        applicant_phone: f.phone || 'N/A',
+        // Tour Details
+        tour_date: formatDate(f.date),
+        tour_time: f.time || 'N/A',
+        tour_notes: f.notes || 'None',
+        // Payment
+        crypto_currency: selectedCrypto,
+        payment_timestamp: now,
+        submitted_at: now,
+      };
+
+      try {
+        await emailjs.send(CONFIG.EMAILJS_SERVICE_ID, CONFIG.EMAILJS_TEMPLATE_TOUR, emailParams);
+
+        // Generate booking reference and show success
+        const ref = 'PH-' + Math.random().toString(36).slice(2, 8).toUpperCase();
+        document.getElementById('booking-ref').textContent = ref;
+
+        const d = new Date(f.date + 'T12:00:00');
+        document.getElementById('confirmed-date').textContent =
+          d.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+        document.getElementById('confirmed-time').textContent = f.time;
+
+        document.getElementById('step-3').classList.replace('active', 'done');
+        document.getElementById('step-3').querySelector('.tour-step-num').innerHTML = '<i class="fa-solid fa-check" style="font-size:12px;"></i>';
+
+        document.getElementById('view-pending').style.display = 'none';
+        document.getElementById('view-success').style.display = 'block';
+
+        Toast.success('Tour Request Sent! \uD83C\uDF89', 'Confirmation email sent. Our team will be in touch within 2 hours.');
+        sessionStorage.removeItem('tour_property');
+        sessionStorage.removeItem('tour_form_data');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      } catch (err) {
+        console.error('[Tour Email] EmailJS send failed:', err);
+        showEmailError('Your tour request could not be submitted. ' + (err?.text || 'Email service error. Please try again or contact us at ' + CONFIG.CONTACT_EMAIL));
+        if (btn) { btn.classList.remove('loading'); btn.disabled = false; }
+      }
+    }
+
+    function showEmailError(msg) {
+      const pending = document.getElementById('view-pending');
+      if (pending) {
+        pending.innerHTML = `
+      <div class="payment-pending" style="gap:var(--space-5);">
+        <div style="width:64px;height:64px;border-radius:50%;background:var(--color-danger-light);color:var(--color-danger);display:flex;align-items:center;justify-content:center;font-size:2rem;">
+          <i class="fa-solid fa-circle-exclamation"></i>
+        </div>
+        <h2 style="font-family:var(--font-display);font-size:var(--text-2xl);font-weight:700;color:var(--color-primary);">Submission Failed</h2>
+        <p style="color:var(--gray-500);line-height:var(--leading-relaxed);max-width:400px;text-align:center;">${msg}</p>
+        <button class="btn btn-primary btn-lg" onclick="sendTourEmail()">
+          <i class="fa-solid fa-rotate"></i> Retry Submission
+        </button>
+        <a href="mailto:${CONFIG.CONTACT_EMAIL}" class="btn btn-ghost">
+          <i class="fa-regular fa-envelope"></i> Contact Us Directly
+        </a>
+      </div>
+    `;
+      }
+    }
+  </script>
+</body>
+
+</html>

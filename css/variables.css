@@ -1,0 +1,285 @@
+/* ============================================================
+   PRESTIGE HOMES — DESIGN SYSTEM VARIABLES
+   ============================================================
+   This file is the single source of truth for every visual
+   decision in Prestige Homes. Change a value here and it
+   updates everywhere on the site automatically.
+   Never hard-code colors, spacing, or fonts anywhere else.
+   ============================================================ */
+
+:root {
+
+  /* ─────────────────────────────────────────────────────────
+     BRAND COLORS
+     ───────────────────────────────────────────────────────── */
+
+  --color-primary:         #0F172A;   /* Deep Navy – main brand, headers, navbars */
+  --color-primary-light:   #1E293B;   /* Lighter navy – card backgrounds, hover states */
+  --color-primary-dark:    #060D1A;   /* Darkest navy – footer background */
+  --color-primary-mid:     #162033;   /* Mid navy – hero overlay */
+
+  --color-secondary:       #D4AF37;   /* Gold – accents, CTAs, highlights */
+  --color-secondary-light: #E8CC5A;   /* Light gold – hover state of gold elements */
+  --color-secondary-dark:  #B8960D;   /* Dark gold – pressed state, borders */
+  --color-secondary-muted: rgba(212, 175, 55, 0.12); /* Transparent gold – subtle backgrounds */
+  --color-secondary-glow:  rgba(212, 175, 55, 0.25); /* Gold glow – shadow effects */
+
+  --color-white:           #FFFFFF;
+  --color-black:           #000000;
+  --color-off-white:       #FAF9F6;   /* Warm white – hero text on dark */
+
+  /* ─────────────────────────────────────────────────────────
+     SEMANTIC COLORS
+     ───────────────────────────────────────────────────────── */
+
+  --color-success:         #16A34A;
+  --color-success-light:   #DCFCE7;
+  --color-success-dark:    #14532D;
+
+  --color-danger:          #DC2626;
+  --color-danger-light:    #FEE2E2;
+  --color-danger-dark:     #7F1D1D;
+
+  --color-warning:         #D97706;
+  --color-warning-light:   #FEF3C7;
+  --color-warning-dark:    #78350F;
+
+  --color-info:            #0284C7;
+  --color-info-light:      #E0F2FE;
+  --color-info-dark:       #075985;
+
+  /* ─────────────────────────────────────────────────────────
+     NEUTRAL GRAY SCALE
+     ───────────────────────────────────────────────────────── */
+
+  --gray-50:               #F8FAFC;
+  --gray-100:              #F1F5F9;
+  --gray-200:              #E2E8F0;
+  --gray-300:              #CBD5E1;
+  --gray-400:              #94A3B8;
+  --gray-500:              #64748B;
+  --gray-600:              #475569;
+  --gray-700:              #334155;
+  --gray-800:              #1E293B;
+  --gray-900:              #0F172A;
+
+  /* ─────────────────────────────────────────────────────────
+     BACKGROUND COLORS
+     ───────────────────────────────────────────────────────── */
+
+  --bg-page:               #F8FAFC;   /* Page background */
+  --bg-white:              #FFFFFF;   /* Card backgrounds */
+  --bg-dark:               #0F172A;   /* Dark sections */
+  --bg-darker:             #060D1A;   /* Footer */
+  --bg-overlay:            rgba(10, 16, 30, 0.75); /* Image overlays */
+  --bg-overlay-heavy:      rgba(10, 16, 30, 0.90); /* Modal backdrops */
+
+  /* ─────────────────────────────────────────────────────────
+     TYPOGRAPHY
+     ───────────────────────────────────────────────────────── */
+
+  /* Font Families */
+  --font-body:             'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-display:          'Playfair Display', 'Georgia', 'Times New Roman', serif;
+
+  /* Font Sizes (rem-based, base = 16px) */
+  --text-xs:               0.6875rem;  /* 11px */
+  --text-sm:               0.8125rem;  /* 13px */
+  --text-base:             1rem;       /* 16px */
+  --text-md:               1.0625rem;  /* 17px */
+  --text-lg:               1.125rem;   /* 18px */
+  --text-xl:               1.25rem;    /* 20px */
+  --text-2xl:              1.5rem;     /* 24px */
+  --text-3xl:              1.875rem;   /* 30px */
+  --text-4xl:              2.25rem;    /* 36px */
+  --text-5xl:              3rem;       /* 48px */
+  --text-6xl:              3.75rem;    /* 60px */
+  --text-7xl:              4.5rem;     /* 72px */
+
+  /* Font Weights */
+  --weight-light:          300;
+  --weight-regular:        400;
+  --weight-medium:         500;
+  --weight-semibold:       600;
+  --weight-bold:           700;
+  --weight-extrabold:      800;
+  --weight-black:          900;
+
+  /* Line Heights */
+  --leading-none:          1;
+  --leading-tight:         1.2;
+  --leading-snug:          1.375;
+  --leading-normal:        1.5;
+  --leading-relaxed:       1.65;
+  --leading-loose:         2;
+
+  /* Letter Spacing */
+  --tracking-tight:        -0.025em;
+  --tracking-normal:       0em;
+  --tracking-wide:         0.025em;
+  --tracking-wider:        0.05em;
+  --tracking-widest:       0.1em;
+  --tracking-luxury:       0.15em;    /* Used for all-caps luxury labels */
+
+  /* ─────────────────────────────────────────────────────────
+     SPACING SCALE
+     Uses 4px base unit consistently
+     ───────────────────────────────────────────────────────── */
+
+  --space-0:               0;
+  --space-px:              1px;
+  --space-0-5:             0.125rem;  /* 2px  */
+  --space-1:               0.25rem;   /* 4px  */
+  --space-1-5:             0.375rem;  /* 6px  */
+  --space-2:               0.5rem;    /* 8px  */
+  --space-2-5:             0.625rem;  /* 10px */
+  --space-3:               0.75rem;   /* 12px */
+  --space-3-5:             0.875rem;  /* 14px */
+  --space-4:               1rem;      /* 16px */
+  --space-5:               1.25rem;   /* 20px */
+  --space-6:               1.5rem;    /* 24px */
+  --space-7:               1.75rem;   /* 28px */
+  --space-8:               2rem;      /* 32px */
+  --space-9:               2.25rem;   /* 36px */
+  --space-10:              2.5rem;    /* 40px */
+  --space-11:              2.75rem;   /* 44px */
+  --space-12:              3rem;      /* 48px */
+  --space-14:              3.5rem;    /* 56px */
+  --space-16:              4rem;      /* 64px */
+  --space-20:              5rem;      /* 80px */
+  --space-24:              6rem;      /* 96px */
+  --space-28:              7rem;      /* 112px */
+  --space-32:              8rem;      /* 128px */
+  --space-36:              9rem;      /* 144px */
+  --space-40:              10rem;     /* 160px */
+
+  /* Section padding – used consistently on all page sections */
+  --section-padding:       var(--space-20) 0;
+  --section-padding-sm:    var(--space-12) 0;
+  --section-padding-lg:    var(--space-28) 0;
+
+  /* ─────────────────────────────────────────────────────────
+     BORDER RADIUS
+     ───────────────────────────────────────────────────────── */
+
+  --radius-none:           0;
+  --radius-xs:             0.1875rem;  /* 3px  */
+  --radius-sm:             0.3125rem;  /* 5px  */
+  --radius-md:             0.5rem;     /* 8px  */
+  --radius-lg:             0.75rem;    /* 12px */
+  --radius-xl:             1rem;       /* 16px */
+  --radius-2xl:            1.25rem;    /* 20px */
+  --radius-3xl:            1.5rem;     /* 24px */
+  --radius-4xl:            2rem;       /* 32px */
+  --radius-full:           9999px;
+
+  /* ─────────────────────────────────────────────────────────
+     BOX SHADOWS
+     ───────────────────────────────────────────────────────── */
+
+  --shadow-xs:    0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-sm:    0 1px 3px 0 rgba(0, 0, 0, 0.10), 0 1px 2px -1px rgba(0, 0, 0, 0.10);
+  --shadow-md:    0 4px 6px -1px rgba(0, 0, 0, 0.10), 0 2px 4px -2px rgba(0, 0, 0, 0.10);
+  --shadow-lg:    0 10px 15px -3px rgba(0, 0, 0, 0.10), 0 4px 6px -4px rgba(0, 0, 0, 0.10);
+  --shadow-xl:    0 20px 25px -5px rgba(0, 0, 0, 0.10), 0 8px 10px -6px rgba(0, 0, 0, 0.10);
+  --shadow-2xl:   0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+
+  /* Luxury-specific shadows */
+  --shadow-card:       0 2px 8px rgba(0,0,0,0.07), 0 8px 32px rgba(0,0,0,0.05);
+  --shadow-card-hover: 0 8px 30px rgba(0,0,0,0.12), 0 20px 60px rgba(0,0,0,0.08);
+  --shadow-gold:       0 4px 24px rgba(212, 175, 55, 0.30);
+  --shadow-gold-lg:    0 8px 40px rgba(212, 175, 55, 0.40);
+  --shadow-navy:       0 4px 24px rgba(15, 23, 42, 0.50);
+  --shadow-modal:      0 32px 80px rgba(0,0,0,0.40);
+
+  /* ─────────────────────────────────────────────────────────
+     BORDERS
+     ───────────────────────────────────────────────────────── */
+
+  --border-width:          1px;
+  --border-width-2:        2px;
+  --border-color:          #E2E8F0;         /* Default border */
+  --border-color-dark:     rgba(255,255,255,0.10); /* Borders on dark backgrounds */
+  --border-color-gold:     rgba(212, 175, 55, 0.40); /* Gold accents */
+
+  /* ─────────────────────────────────────────────────────────
+     TRANSITIONS & ANIMATIONS
+     ───────────────────────────────────────────────────────── */
+
+  --ease-out:              cubic-bezier(0.0, 0.0, 0.2, 1);
+  --ease-in:               cubic-bezier(0.4, 0.0, 1, 1);
+  --ease-in-out:           cubic-bezier(0.4, 0.0, 0.2, 1);
+  --ease-spring:           cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-luxury:           cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+  --duration-instant:      75ms;
+  --duration-fast:         150ms;
+  --duration-base:         250ms;
+  --duration-slow:         400ms;
+  --duration-slower:       600ms;
+  --duration-slowest:      800ms;
+
+  --transition-fast:       var(--duration-fast) var(--ease-out);
+  --transition-base:       var(--duration-base) var(--ease-out);
+  --transition-slow:       var(--duration-slow) var(--ease-luxury);
+  --transition-spring:     var(--duration-slow) var(--ease-spring);
+
+  /* ─────────────────────────────────────────────────────────
+     Z-INDEX SCALE
+     ───────────────────────────────────────────────────────── */
+
+  --z-below:         -1;
+  --z-base:           0;
+  --z-raised:        10;
+  --z-dropdown:     100;
+  --z-sticky:       200;
+  --z-navbar:       300;
+  --z-overlay:      400;
+  --z-modal:        500;
+  --z-toast:        600;
+  --z-tooltip:      700;
+  --z-maximum:      999;
+
+  /* ─────────────────────────────────────────────────────────
+     LAYOUT
+     ───────────────────────────────────────────────────────── */
+
+  --navbar-height:         72px;
+  --navbar-height-scrolled:60px;
+
+  --container-sm:          640px;
+  --container-md:          768px;
+  --container-lg:          1024px;
+  --container-xl:          1280px;
+  --container-2xl:         1400px;
+
+  --sidebar-width:         320px;
+  --sidebar-width-collapsed: 72px;
+
+  /* ─────────────────────────────────────────────────────────
+     COMPONENT TOKENS
+     ───────────────────────────────────────────────────────── */
+
+  /* Buttons */
+  --btn-height-sm:         36px;
+  --btn-height-md:         44px;
+  --btn-height-lg:         52px;
+  --btn-height-xl:         60px;
+
+  /* Inputs */
+  --input-height-sm:       36px;
+  --input-height-md:       48px;
+  --input-height-lg:       56px;
+
+  /* Cards */
+  --card-radius:           var(--radius-xl);
+  --card-padding:          var(--space-6);
+
+  /* Property Cards */
+  --property-card-radius:  var(--radius-2xl);
+  --property-img-height:   240px;
+
+  /* Toast */
+  --toast-width:           360px;
+}

@@ -1,0 +1,375 @@
+/* ============================================================
+   PRESTIGE HOMES — ANIMATION LIBRARY
+   ============================================================
+   All animation keyframes and animation utility classes.
+   
+   Usage in HTML:
+     <div class="fade-in">  → fades in immediately
+     <div class="reveal">   → reveals on scroll (requires js/utils.js)
+   
+   Scroll-reveal classes (triggered by IntersectionObserver):
+     .reveal           → default fade-up reveal
+     .reveal-left      → slide from left
+     .reveal-right     → slide from right
+     .reveal-scale     → scale up from smaller
+     
+   Delays (stack with reveal classes):
+     .delay-100  .delay-200  .delay-300  .delay-400  .delay-500
+   ============================================================ */
+
+/* ─────────────────────────────────────────────────────────────
+   KEYFRAMES
+   ───────────────────────────────────────────────────────────── */
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes fade-out {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-down {
+  from { opacity: 0; transform: translateY(-24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-left {
+  from { opacity: 0; transform: translateX(32px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slide-right {
+  from { opacity: 0; transform: translateX(-32px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes scale-out {
+  from { opacity: 1; transform: scale(1); }
+  to   { opacity: 0; transform: scale(0.92); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.5; }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { text-shadow: 0 0 0 rgba(212,175,55,0); }
+  50%       { text-shadow: 0 0 12px rgba(212,175,55,0.6); }
+}
+
+@keyframes bounce-in {
+  0%   { opacity: 0; transform: scale(0.6); }
+  55%  { opacity: 1; transform: scale(1.05); }
+  75%  { transform: scale(0.97); }
+  100% { transform: scale(1); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-8px); }
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  20%       { transform: rotate(-4deg); }
+  60%       { transform: rotate(4deg); }
+}
+
+/* Toast keyframes */
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes toast-out {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+    max-height: 0;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+@keyframes toast-progress {
+  from { width: 100%; }
+  to   { width: 0%; }
+}
+
+/* Hero text stagger */
+@keyframes hero-text-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(40px) skewY(3deg);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) skewY(0deg);
+    filter: blur(0);
+  }
+}
+
+/* Counter animation */
+@keyframes count-up {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Number flicker for counters */
+@keyframes number-appear {
+  0%   { opacity: 0; transform: translateY(10px) scale(0.9); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Image pan (for hero parallax) */
+@keyframes image-pan {
+  0%   { transform: scale(1.08) translateY(0); }
+  100% { transform: scale(1.08) translateY(-3%); }
+}
+
+/* Gold shimmer on text */
+@keyframes gold-shine {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   IMMEDIATE ANIMATION CLASSES
+   (No scroll trigger — play on page load)
+   ───────────────────────────────────────────────────────────── */
+
+.fade-in      { animation: fade-in var(--duration-slow) var(--ease-out) forwards; }
+.slide-up     { animation: slide-up var(--duration-slow) var(--ease-out) forwards; }
+.slide-down   { animation: slide-down var(--duration-slow) var(--ease-out) forwards; }
+.slide-left   { animation: slide-left var(--duration-slow) var(--ease-out) forwards; }
+.slide-right  { animation: slide-right var(--duration-slow) var(--ease-out) forwards; }
+.scale-in     { animation: scale-in var(--duration-slow) var(--ease-spring) forwards; }
+.bounce-in    { animation: bounce-in var(--duration-slower) var(--ease-spring) forwards; }
+
+/* ─────────────────────────────────────────────────────────────
+   SCROLL-REVEAL SYSTEM
+   Initial state: hidden
+   Active state (.revealed): visible
+   Triggered by IntersectionObserver in utils.js
+   ───────────────────────────────────────────────────────────── */
+
+.reveal,
+.reveal-left,
+.reveal-right,
+.reveal-scale,
+.reveal-fade {
+  opacity: 0;
+  transition:
+    opacity var(--duration-slower) var(--ease-luxury),
+    transform var(--duration-slower) var(--ease-luxury);
+  will-change: opacity, transform;
+}
+
+.reveal       { transform: translateY(32px); }
+.reveal-left  { transform: translateX(-48px); }
+.reveal-right { transform: translateX(48px); }
+.reveal-scale { transform: scale(0.92); }
+.reveal-fade  { transform: none; }
+
+/* When IntersectionObserver adds .revealed */
+.reveal.revealed,
+.reveal-left.revealed,
+.reveal-right.revealed,
+.reveal-scale.revealed,
+.reveal-fade.revealed {
+  opacity: 1;
+  transform: none;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   ANIMATION DELAY UTILITIES
+   ───────────────────────────────────────────────────────────── */
+
+.delay-100 { animation-delay: 100ms; transition-delay: 100ms; }
+.delay-150 { animation-delay: 150ms; transition-delay: 150ms; }
+.delay-200 { animation-delay: 200ms; transition-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; transition-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; transition-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; transition-delay: 500ms; }
+.delay-600 { animation-delay: 600ms; transition-delay: 600ms; }
+.delay-700 { animation-delay: 700ms; transition-delay: 700ms; }
+.delay-800 { animation-delay: 800ms; transition-delay: 800ms; }
+
+/* ─────────────────────────────────────────────────────────────
+   CONTINUOUS ANIMATIONS
+   ───────────────────────────────────────────────────────────── */
+
+.animate-spin    { animation: spin 1s linear infinite; }
+.animate-pulse   { animation: pulse 2s ease-in-out infinite; }
+.animate-float   { animation: float 3s ease-in-out infinite; }
+.animate-shimmer { animation: shimmer 1.5s linear infinite; }
+
+/* ─────────────────────────────────────────────────────────────
+   HOVER TRANSITION HELPERS
+   ───────────────────────────────────────────────────────────── */
+
+.hover-lift {
+  transition: transform var(--transition-slow), box-shadow var(--transition-slow);
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.hover-scale {
+  transition: transform var(--transition-base);
+}
+
+.hover-scale:hover {
+  transform: scale(1.02);
+}
+
+.hover-glow-gold {
+  transition: box-shadow var(--transition-base);
+}
+
+.hover-glow-gold:hover {
+  box-shadow: var(--shadow-gold);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   GOLD SHINE TEXT EFFECT
+   Apply to headings or gold-colored text for a shimmer sweep
+   ───────────────────────────────────────────────────────────── */
+
+.text-shine {
+  background: linear-gradient(
+    90deg,
+    var(--color-secondary-dark) 0%,
+    var(--color-secondary) 30%,
+    var(--color-secondary-light) 50%,
+    var(--color-secondary) 70%,
+    var(--color-secondary-dark) 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gold-shine 4s linear infinite;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   IMAGE ZOOM ON HOVER (used in property cards)
+   ───────────────────────────────────────────────────────────── */
+
+.img-zoom-wrapper {
+  overflow: hidden;
+}
+
+.img-zoom-wrapper img,
+.img-zoom-wrapper .img-zoom {
+  transition: transform var(--duration-slower) var(--ease-luxury);
+  will-change: transform;
+}
+
+.img-zoom-wrapper:hover img,
+.img-zoom-wrapper:hover .img-zoom {
+  transform: scale(1.06);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   PROPERTY CARD OVERLAY ANIMATIONS
+   ───────────────────────────────────────────────────────────── */
+
+.property-overlay-actions {
+  transition: opacity var(--transition-base), transform var(--transition-base);
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.property-card:hover .property-overlay-actions {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   PAGE TRANSITION (for multi-page navigation)
+   ───────────────────────────────────────────────────────────── */
+
+.page-enter {
+  animation: fade-in var(--duration-base) var(--ease-out);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   CHECKBOX / TOGGLE ANIMATIONS
+   ───────────────────────────────────────────────────────────── */
+
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.toggle-switch input { display: none; }
+
+.toggle-slider {
+  position: absolute;
+  inset: 0;
+  background: var(--gray-300);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.toggle-slider::before {
+  content: '';
+  position: absolute;
+  left: 3px;
+  top: 3px;
+  width: 18px;
+  height: 18px;
+  background: var(--color-white);
+  border-radius: 50%;
+  transition: transform var(--transition-fast);
+  box-shadow: var(--shadow-sm);
+}
+
+.toggle-switch input:checked + .toggle-slider {
+  background: var(--color-primary);
+}
+
+.toggle-switch input:checked + .toggle-slider::before {
+  transform: translateX(20px);
+}

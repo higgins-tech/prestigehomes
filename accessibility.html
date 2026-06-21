@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Accessibility | Prestige Homes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/navbar.css" />
+  <link rel="stylesheet" href="css/footer.css" />
+  <link rel="stylesheet" href="css/simple-page.css" />
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230F172A'/><text y='.9em' font-size='70' x='12'>🏛</text></svg>" />
+</head>
+
+<body>
+
+  <div id="navbar-container"></div>
+
+  <main class="simple-page">
+    <div class="simple-header">
+      <span class="section-eyebrow">Our Commitment</span>
+      <h1>Accessibility Statement</h1>
+      <p>Prestige Homes is committed to ensuring digital accessibility for people of all abilities.</p>
+    </div>
+
+    <div class="simple-content">
+      <p class="updated-note">Last updated: November 2024</p>
+
+      <h2>Our Commitment</h2>
+      <p>We are committed to providing a website that is accessible to the widest possible audience, regardless of
+        technology or ability. We are actively working to increase the accessibility and usability of our Platform and
+        in doing so adhere to many of the available standards and guidelines.</p>
+
+      <h2>Accessibility Features</h2>
+      <p>This Platform includes the following accessibility features:</p>
+      <ul>
+        <li>Semantic HTML structure with proper heading hierarchy</li>
+        <li>ARIA labels and roles for interactive elements, including navigation, modals, and form controls</li>
+        <li>Full keyboard navigation support, including visible focus states on all interactive elements</li>
+        <li>Sufficient color contrast ratios meeting WCAG AA standards across text and interface elements</li>
+        <li>Descriptive alternative text for property images</li>
+        <li>Form labels and error messages associated with their respective input fields</li>
+        <li>Respect for reduced-motion preferences — animations are minimized for users who have enabled this setting in
+          their operating system</li>
+        <li>Responsive design that adapts to screen readers, magnification tools, and varying viewport sizes</li>
+      </ul>
+
+      <h2>Standards We Reference</h2>
+      <p>We aim to conform to the Web Content Accessibility Guidelines (WCAG) 2.1, Level AA. These guidelines explain
+        how to make web content more accessible for people with disabilities and more user-friendly for everyone.</p>
+
+      <h2>Ongoing Efforts</h2>
+      <p>Accessibility is an ongoing effort. As this Platform evolves to production, we will continue to audit
+        and improve accessibility through automated testing, manual review, and user feedback.</p>
+
+      <h2>Feedback</h2>
+      <p>We welcome your feedback on the accessibility of the Prestige Homes Platform. If you encounter accessibility
+        barriers, please contact us at <a href="mailto:prestigehomerents@gmail.com"
+          style="color:var(--color-secondary-dark);font-weight:600;">prestigehomerents@gmail.com</a> and we will make
+        every effort to address your concern.</p>
+    </div>
+  </main>
+
+  <div id="footer-container"></div>
+  <button class="back-to-top hidden" id="back-to-top" aria-label="Back to top"><i
+      class="fa-solid fa-chevron-up"></i></button>
+  <div class="toast-container" id="toast-container" aria-live="polite"></div>
+
+
+  <script src="js/config.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/components.js"></script>
+</body>
+
+</html>

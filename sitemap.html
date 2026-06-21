@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sitemap | Prestige Homes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/navbar.css" />
+  <link rel="stylesheet" href="css/footer.css" />
+  <link rel="stylesheet" href="css/simple-page.css" />
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230F172A'/><text y='.9em' font-size='70' x='12'>🏛</text></svg>" />
+</head>
+
+<body>
+
+  <div id="navbar-container"></div>
+
+  <main class="simple-page">
+    <div class="simple-header">
+      <span class="section-eyebrow">Navigation</span>
+      <h1>Sitemap</h1>
+      <p>A complete overview of all pages available on the Prestige Homes platform.</p>
+    </div>
+
+    <div class="simple-content">
+      <div class="sitemap-grid">
+
+        <div class="sitemap-col">
+          <h3>Main</h3>
+          <ul>
+            <li><a href="index.html"><i class="fa-solid fa-chevron-right"></i> Home</a></li>
+            <li><a href="search.html?type=buy"><i class="fa-solid fa-chevron-right"></i> Buy Properties</a></li>
+            <li><a href="search.html?type=rent"><i class="fa-solid fa-chevron-right"></i> Rent Properties</a></li>
+            <li><a href="search.html?propertyType=Penthouse"><i class="fa-solid fa-chevron-right"></i> Penthouses</a>
+            </li>
+            <li><a href="search.html?propertyType=Estate"><i class="fa-solid fa-chevron-right"></i> Estates</a></li>
+            <li><a href="index.html#about"><i class="fa-solid fa-chevron-right"></i> About Us</a></li>
+            <li><a href="index.html#faq"><i class="fa-solid fa-chevron-right"></i> FAQ</a></li>
+            <li><a href="index.html#contact"><i class="fa-solid fa-chevron-right"></i> Contact</a></li>
+          </ul>
+        </div>
+
+        <div class="sitemap-col">
+          <h3>Account</h3>
+          <ul>
+            <li><a href="auth/login.html"><i class="fa-solid fa-chevron-right"></i> Sign In</a></li>
+            <li><a href="auth/signup.html"><i class="fa-solid fa-chevron-right"></i> Create Account</a></li>
+            <li><a href="auth/forgot-password.html"><i class="fa-solid fa-chevron-right"></i> Forgot Password</a></li>
+            <li><a href="dashboard.html"><i class="fa-solid fa-chevron-right"></i> My Dashboard</a></li>
+            <li><a href="saved.html"><i class="fa-solid fa-chevron-right"></i> Saved Listings</a></li>
+            <li><a href="applications.html"><i class="fa-solid fa-chevron-right"></i> My Applications</a></li>
+            <li><a href="tours.html"><i class="fa-solid fa-chevron-right"></i> Booked Tours</a></li>
+          </ul>
+        </div>
+
+        <div class="sitemap-col">
+          <h3>Company</h3>
+          <ul>
+            <li><a href="careers.html"><i class="fa-solid fa-chevron-right"></i> Careers</a></li>
+            <li><a href="index.html#testimonials"><i class="fa-solid fa-chevron-right"></i> Testimonials</a></li>
+            <li><a href="index.html#news"><i class="fa-solid fa-chevron-right"></i> Market Insights</a></li>
+          </ul>
+        </div>
+
+        <div class="sitemap-col">
+          <h3>Legal</h3>
+          <ul>
+            <li><a href="privacy.html"><i class="fa-solid fa-chevron-right"></i> Privacy Policy</a></li>
+            <li><a href="terms.html"><i class="fa-solid fa-chevron-right"></i> Terms of Service</a></li>
+            <li><a href="accessibility.html"><i class="fa-solid fa-chevron-right"></i> Accessibility</a></li>
+            <li><a href="sitemap.html"><i class="fa-solid fa-chevron-right"></i> Sitemap</a></li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <div id="footer-container"></div>
+  <button class="back-to-top hidden" id="back-to-top" aria-label="Back to top"><i
+      class="fa-solid fa-chevron-up"></i></button>
+  <div class="toast-container" id="toast-container" aria-live="polite"></div>
+
+
+  <script src="js/config.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/components.js"></script>
+</body>
+
+</html>

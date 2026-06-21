@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Search luxury properties for sale and rent across North America. Filter by price, bedrooms, type, and more." />
+  <title>Search Properties | Prestige Homes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/navbar.css" />
+  <link rel="stylesheet" href="css/footer.css" />
+  <link rel="stylesheet" href="css/property-card.css" />
+  <link rel="stylesheet" href="css/search.css" />
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230F172A'/><text y='.9em' font-size='70' x='12'>🏛</text></svg>" />
+</head>
+
+<body>
+
+  <div id="navbar-container"></div>
+
+  <main class="search-page">
+
+    <!-- Search Header -->
+    <div class="search-header">
+      <div class="search-header-inner">
+
+        <!-- Search bar -->
+        <div class="search-header-bar">
+          <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+          <input type="text" class="search-header-input" id="search-input" placeholder="Search by city, ZIP, address…"
+            aria-label="Search location" />
+          <button onclick="executeSearch()" class="btn btn-primary btn-sm" aria-label="Search">Search</button>
+        </div>
+
+        <!-- Buy / Rent toggle -->
+        <div class="search-type-toggle" role="group" aria-label="Listing type">
+          <button class="search-type-btn active" id="type-buy" onclick="setListingType('buy')"
+            aria-pressed="true">Buy</button>
+          <button class="search-type-btn" id="type-rent" onclick="setListingType('rent')"
+            aria-pressed="false">Rent</button>
+        </div>
+
+        <!-- Sort -->
+        <div class="search-header-sort">
+          <label for="sort-select" class="sr-only">Sort by</label>
+          <i class="fa-solid fa-arrow-up-wide-short" aria-hidden="true"></i>
+          <select class="sort-select" id="sort-select" onchange="sortResults(this.value)">
+            <option value="newest">Newest First</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+            <option value="beds-desc">Most Bedrooms</option>
+            <option value="sqft-desc">Largest First</option>
+          </select>
+        </div>
+
+        <!-- Filter toggle -->
+        <button class="filter-toggle-btn" id="filter-toggle-btn" onclick="toggleFilters()" aria-expanded="true"
+          aria-controls="filters-sidebar">
+          <i class="fa-solid fa-sliders" aria-hidden="true"></i>
+          Filters
+          <span class="filter-badge hidden" id="filter-count-badge">0</span>
+        </button>
+
+      </div>
+    </div>
+
+    <!-- Search Layout -->
+    <div class="search-layout" id="search-layout">
+
+      <!-- FILTERS SIDEBAR -->
+      <aside class="filters-sidebar" id="filters-sidebar" aria-label="Property filters">
+        <div class="filters-header">
+          <span class="filters-title">Filters</span>
+          <button class="filters-clear" onclick="clearAllFilters()">Clear All</button>
+        </div>
+
+        <div class="filters-body">
+
+          <!-- Price Range -->
+          <div class="filter-group">
+            <div class="filter-group-title">Price Range</div>
+            <div class="price-range-inputs">
+              <input type="number" class="price-input" id="filter-min-price" placeholder="Min" min="0"
+                onchange="applyFilters()" />
+              <span class="price-range-sep">to</span>
+              <input type="number" class="price-input" id="filter-max-price" placeholder="Max" min="0"
+                onchange="applyFilters()" />
+            </div>
+          </div>
+
+          <!-- Bedrooms -->
+          <div class="filter-group">
+            <div class="filter-group-title">Bedrooms</div>
+            <div class="stepper" id="bed-stepper" role="group" aria-label="Number of bedrooms">
+              <button class="stepper-btn active" onclick="setFilter('beds','any',this)">Any</button>
+              <button class="stepper-btn" onclick="setFilter('beds','1',this)">1+</button>
+              <button class="stepper-btn" onclick="setFilter('beds','2',this)">2+</button>
+              <button class="stepper-btn" onclick="setFilter('beds','3',this)">3+</button>
+              <button class="stepper-btn" onclick="setFilter('beds','4',this)">4+</button>
+              <button class="stepper-btn" onclick="setFilter('beds','5',this)">5+</button>
+            </div>
+          </div>
+
+          <!-- Bathrooms -->
+          <div class="filter-group">
+            <div class="filter-group-title">Bathrooms</div>
+            <div class="stepper" id="bath-stepper" role="group" aria-label="Number of bathrooms">
+              <button class="stepper-btn active" onclick="setFilter('baths','any',this)">Any</button>
+              <button class="stepper-btn" onclick="setFilter('baths','1',this)">1+</button>
+              <button class="stepper-btn" onclick="setFilter('baths','2',this)">2+</button>
+              <button class="stepper-btn" onclick="setFilter('baths','3',this)">3+</button>
+              <button class="stepper-btn" onclick="setFilter('baths','4',this)">4+</button>
+            </div>
+          </div>
+
+          <!-- Property Type -->
+          <div class="filter-group">
+            <div class="filter-group-title">Property Type</div>
+            <div class="filter-checkbox-list" id="property-type-filters">
+              <!-- Populated by search.js -->
+            </div>
+          </div>
+
+          <!-- Amenities -->
+          <div class="filter-group">
+            <div class="filter-group-title">Amenities</div>
+            <div class="filter-checkbox-list" id="amenities-filters">
+              <!-- Populated by search.js -->
+            </div>
+          </div>
+
+          <!-- Square Footage -->
+          <div class="filter-group">
+            <div class="filter-group-title">Min Square Footage</div>
+            <select class="form-select" id="filter-sqft" onchange="applyFilters()">
+              <option value="">Any Size</option>
+              <option value="500">500+ sqft</option>
+              <option value="1000">1,000+ sqft</option>
+              <option value="2000">2,000+ sqft</option>
+              <option value="3000">3,000+ sqft</option>
+              <option value="5000">5,000+ sqft</option>
+              <option value="8000">8,000+ sqft</option>
+            </select>
+          </div>
+
+          <button class="btn btn-dark btn-full filter-apply-btn" onclick="applyFilters()">
+            <i class="fa-solid fa-check" aria-hidden="true"></i>
+            Apply Filters
+          </button>
+
+        </div>
+      </aside>
+
+      <!-- RESULTS AREA -->
+      <section class="results-area" aria-label="Search results">
+
+        <!-- Prompt state: shown before the user runs any search -->
+        <div id="search-prompt" style="display:none;">
+          <div class="empty-state" style="padding:var(--space-20) var(--space-8);">
+            <div class="empty-state-icon" style="font-size:3.5rem;color:var(--color-secondary);opacity:0.6;">
+              <i class="fa-solid fa-magnifying-glass-location" aria-hidden="true"></i>
+            </div>
+            <h3 class="empty-state-title">Search For Properties</h3>
+            <p class="empty-state-text">
+              Enter a city name, ZIP code, or street address in the search bar above,
+              then click <strong>Search</strong> to find available properties.
+            </p>
+            <div style="display:flex;gap:var(--space-2);justify-content:center;flex-wrap:wrap;">
+              <button class="btn btn-ghost btn-sm"
+                onclick="document.getElementById('search-input').value='New York, NY'; executeSearch();">
+                New York, NY
+              </button>
+              <button class="btn btn-ghost btn-sm"
+                onclick="document.getElementById('search-input').value='Beverly Hills, CA'; executeSearch();">
+                Beverly Hills, CA
+              </button>
+              <button class="btn btn-ghost btn-sm"
+                onclick="document.getElementById('search-input').value='Miami, FL'; executeSearch();">
+                Miami, FL
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Service error state: shown when API is unavailable or misconfigured -->
+        <div id="service-error" style="display:none;">
+          <div class="empty-state" style="padding:var(--space-16) var(--space-8);">
+            <div class="empty-state-icon" style="color:var(--color-danger);opacity:0.6;">
+              <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
+            </div>
+            <h3 class="empty-state-title service-error-title">Property Service Unavailable</h3>
+            <p class="empty-state-text service-error-msg">
+              The property search service is currently unavailable. Please try again in a moment.
+            </p>
+            <button class="btn btn-primary" onclick="loadProperties()">
+              <i class="fa-solid fa-rotate" aria-hidden="true"></i> Try Again
+            </button>
+          </div>
+        </div>
+
+        <div class="results-meta">
+          <p class="results-count" id="results-count" aria-live="polite">
+            Showing <strong id="result-number">0</strong> properties
+          </p>
+          <div class="active-filters" id="active-filters" aria-label="Active filters"></div>
+        </div>
+
+        <div class="results-grid" id="results-grid">
+          <!-- Populated by search.js -->
+        </div>
+
+        <div class="load-more-wrap" id="load-more-wrap" style="display:none;">
+          <p class="load-more-text" id="load-more-text"></p>
+          <button class="btn btn-secondary btn-lg" id="load-more-btn" onclick="loadMoreResults()">
+            <i class="fa-solid fa-arrow-down" aria-hidden="true"></i>
+            Load More Properties
+          </button>
+        </div>
+
+        <div class="empty-state hidden" id="empty-state">
+          <div class="empty-state-icon"><i class="fa-regular fa-building" aria-hidden="true"></i></div>
+          <h3 class="empty-state-title">No Properties Found</h3>
+          <p class="empty-state-text">No listings match your search. Try a different location or remove some filters.
+          </p>
+          <button class="btn btn-primary" onclick="clearAllFilters()">Clear All Filters</button>
+        </div>
+
+        <div class="map-placeholder reveal">
+          <div class="map-placeholder-icon" aria-hidden="true"><i class="fa-solid fa-map-location-dot"></i></div>
+          <h3 class="map-placeholder-title">Interactive Map View</h3>
+          <p class="map-placeholder-sub">
+            Full Mapbox integration will be enabled in production.<br />
+            All listed properties are pinned to their exact addresses.
+          </p>
+          <button class="btn btn-ghost-light btn-sm"
+            onclick="Toast.info('Coming Soon','Map view will be available in the live version.')">
+            <i class="fa-solid fa-map" aria-hidden="true"></i> Preview Map
+          </button>
+        </div>
+
+      </section>
+
+    </div>
+
+  </main>
+
+  <div id="footer-container"></div>
+  <button class="back-to-top hidden" id="back-to-top" aria-label="Back to top"><i
+      class="fa-solid fa-chevron-up"></i></button>
+  <div class="toast-container" id="toast-container" aria-live="polite"></div>
+
+
+  <script src="js/config.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/search.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Application Fee Payment | Prestige Homes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/navbar.css" />
+  <link rel="stylesheet" href="css/footer.css" />
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230F172A'/><text y='.9em' font-size='70' x='12'>🏛</text></svg>" />
+  <style>
+    .pay-page {
+      padding-top: var(--navbar-height);
+      min-height: 100vh;
+      background: var(--gray-50);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-bottom: var(--space-10);
+    }
+
+    .pay-container {
+      max-width: 540px;
+      width: 100%;
+      margin: var(--space-8) var(--space-6);
+    }
+
+    .pay-card {
+      background: var(--color-white);
+      border-radius: var(--radius-3xl);
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-card);
+      overflow: hidden;
+    }
+
+    .pay-header {
+      background: var(--color-primary);
+      padding: var(--space-8);
+      text-align: center;
+    }
+
+    .pay-header-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: rgba(212, 175, 55, 0.15);
+      border: 1px solid rgba(212, 175, 55, 0.30);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-secondary);
+      font-size: 1.5rem;
+      margin: 0 auto var(--space-4);
+    }
+
+    .pay-header-title {
+      font-family: var(--font-display);
+      font-size: var(--text-3xl);
+      font-weight: 700;
+      color: white;
+      margin-bottom: var(--space-2);
+    }
+
+    .pay-header-sub {
+      color: rgba(255, 255, 255, 0.55);
+      font-size: var(--text-sm);
+    }
+
+    .pay-body {
+      padding: var(--space-8);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-6);
+    }
+
+    .crypto-tabs {
+      display: flex;
+      gap: var(--space-2);
+    }
+
+    .crypto-tab {
+      flex: 1;
+      padding: var(--space-3);
+      border-radius: var(--radius-xl);
+      border: 2px solid var(--border-color);
+      text-align: center;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      background: var(--color-white);
+    }
+
+    .crypto-tab:hover {
+      border-color: var(--gray-300);
+    }
+
+    .crypto-tab.active {
+      border-color: var(--color-secondary);
+      background: var(--color-secondary-muted);
+    }
+
+    .crypto-tab-icon {
+      font-size: 1.5rem;
+      margin-bottom: var(--space-1);
+    }
+
+    .crypto-tab-name {
+      font-size: var(--text-xs);
+      font-weight: var(--weight-semibold);
+      color: var(--gray-700);
+    }
+
+    .crypto-tab-amount {
+      font-size: var(--text-xs);
+      color: var(--gray-500);
+      margin-top: 2px;
+    }
+
+    .crypto-tab.active .crypto-tab-name {
+      color: var(--color-secondary-dark);
+    }
+
+    .qr-placeholder {
+      width: 160px;
+      height: 160px;
+      margin: 0 auto;
+      background: var(--color-white);
+      border: 2px solid var(--border-color);
+      border-radius: var(--radius-xl);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+    }
+
+    .qr-placeholder i {
+      font-size: 4rem;
+      color: var(--color-primary);
+    }
+
+    .qr-placeholder-label {
+      font-size: var(--text-xs);
+      color: var(--gray-400);
+      text-align: center;
+    }
+
+    .wallet-display {
+      background: var(--gray-50);
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-xl);
+      padding: var(--space-4);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+
+    .wallet-label {
+      font-size: var(--text-xs);
+      font-weight: var(--weight-semibold);
+      letter-spacing: var(--tracking-wide);
+      text-transform: uppercase;
+      color: var(--gray-500);
+    }
+
+    .wallet-address-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      background: var(--color-white);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: var(--space-3);
+    }
+
+    .wallet-address {
+      font-family: monospace;
+      font-size: var(--text-xs);
+      color: var(--color-primary);
+      flex: 1;
+      word-break: break-all;
+    }
+
+    .copy-btn {
+      flex-shrink: 0;
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-md);
+      background: var(--color-primary);
+      color: var(--color-white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border: none;
+      font-size: var(--text-sm);
+      transition: all var(--transition-fast);
+    }
+
+    .copy-btn:hover {
+      background: var(--color-secondary);
+      color: var(--color-primary);
+    }
+
+    .countdown-bar {
+      background: var(--color-warning-light);
+      border: 1px solid rgba(245, 158, 11, 0.25);
+      border-radius: var(--radius-xl);
+      padding: var(--space-4);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-4);
+    }
+
+    .countdown-bar.urgent {
+      background: var(--color-danger-light);
+      border-color: rgba(220, 38, 38, 0.25);
+    }
+
+    .countdown-label {
+      font-size: var(--text-sm);
+      color: var(--gray-700);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .countdown-time {
+      font-family: var(--font-display);
+      font-size: var(--text-2xl);
+      font-weight: var(--weight-bold);
+      color: var(--color-warning);
+      letter-spacing: 2px;
+    }
+
+    .countdown-bar.urgent .countdown-time {
+      color: var(--color-danger);
+      animation: pulse 1s ease-in-out infinite;
+    }
+
+    .payment-success,
+    .payment-pending {
+      text-align: center;
+      padding: var(--space-10) var(--space-8);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-5);
+    }
+
+    .success-icon {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: var(--color-success-light);
+      color: var(--color-success);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+    }
+
+    .pending-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: var(--color-warning-light);
+      color: var(--color-warning);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    .success-title {
+      font-family: var(--font-display);
+      font-size: var(--text-3xl);
+      font-weight: var(--weight-bold);
+      color: var(--color-primary);
+    }
+
+    .success-text {
+      font-size: var(--text-base);
+      color: var(--gray-500);
+      line-height: var(--leading-relaxed);
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="navbar-container"></div>
+
+  <main class="pay-page">
+    <div class="pay-container">
+
+      <!-- PAYMENT VIEW -->
+      <div class="pay-card fade-in" id="view-payment">
+        <div class="pay-header">
+          <div class="pay-header-icon"><i class="fa-solid fa-file-signature"></i></div>
+          <div class="pay-header-title">Application Fee</div>
+          <div class="pay-header-sub">Finalize your rental application with a secure crypto payment</div>
+        </div>
+        <div class="pay-body">
+
+          <div
+            style="text-align:center;padding:var(--space-4);background:var(--color-secondary-muted);border:1px solid rgba(212,175,55,0.20);border-radius:var(--radius-xl);">
+            <p style="font-size:var(--text-xs);color:var(--gray-500);margin-bottom:var(--space-1);">APPLICATION
+              PROCESSING FEE</p>
+            <p
+              style="font-family:var(--font-display);font-size:var(--text-4xl);font-weight:700;color:var(--color-primary);">
+              $100.00</p>
+            <p style="font-size:var(--text-xs);color:var(--gray-400);margin-top:var(--space-1);">One-time fee · Covers
+              background & credit check</p>
+          </div>
+
+          <!-- Countdown -->
+          <div class="countdown-bar" id="countdown-bar">
+            <div class="countdown-label"><i class="fa-regular fa-clock"></i> Order expires in:</div>
+            <div class="countdown-time" id="countdown-display">30:00</div>
+          </div>
+
+          <!-- Crypto tabs -->
+          <div>
+            <p class="luxury-label" style="margin-bottom:var(--space-3);">Select Cryptocurrency</p>
+            <div class="crypto-tabs">
+              <div class="crypto-tab active" onclick="selectCrypto('BTC',this)">
+                <div class="crypto-tab-icon">₿</div>
+                <div class="crypto-tab-name">Bitcoin</div>
+                <div class="crypto-tab-amount">0.00141 BTC</div>
+              </div>
+              <div class="crypto-tab" onclick="selectCrypto('ETH',this)">
+                <div class="crypto-tab-icon">Ξ</div>
+                <div class="crypto-tab-name">Ethereum</div>
+                <div class="crypto-tab-amount">0.03350 ETH</div>
+              </div>
+              <div class="crypto-tab" onclick="selectCrypto('BNB',this)">
+                <div class="crypto-tab-icon">🔶</div>
+                <div class="crypto-tab-name">BNB</div>
+                <div class="crypto-tab-amount">0.16640 BNB</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Amount -->
+          <div style="text-align:center;">
+            <p style="font-size:var(--text-xs);color:var(--gray-500);margin-bottom:var(--space-1);">EXACT AMOUNT TO SEND
+            </p>
+            <p class="text-shine" style="font-family:var(--font-display);font-size:var(--text-3xl);font-weight:700;"
+              id="crypto-amount-display">0.00141 BTC</p>
+          </div>
+
+          <!-- QR -->
+          <div style="display:flex;flex-direction:column;align-items:center;gap:var(--space-3);">
+            <div class="qr-placeholder">
+              <i class="fa-solid fa-qrcode"></i>
+              <div class="qr-placeholder-label">QR Code<br />loads here</div>
+            </div>
+          </div>
+
+          <!-- Wallet -->
+          <div class="wallet-display">
+            <div class="wallet-label">Send to wallet address</div>
+            <div class="wallet-address-row">
+              <span class="wallet-address" id="wallet-address-text">1PrEstiGeHmSzP9f4vK8UwcqJTHNuBd2xA</span>
+              <button class="copy-btn" onclick="copyWalletAddress()" aria-label="Copy address"><i
+                  class="fa-regular fa-copy"></i></button>
+            </div>
+            <p
+              style="font-size:var(--text-xs);color:var(--color-danger);display:flex;gap:var(--space-1);align-items:center;">
+              <i class="fa-solid fa-triangle-exclamation"></i>
+              Send ONLY <span id="wallet-coin-label">BTC</span> to this address.
+            </p>
+          </div>
+
+          <button class="btn btn-success btn-full btn-lg" onclick="confirmPayment()">
+            <i class="fa-solid fa-check-circle"></i> I Have Made Payment
+          </button>
+        </div>
+      </div>
+
+      <!-- PENDING VIEW -->
+      <div class="pay-card fade-in" id="view-pending" style="display:none;">
+        <div class="payment-pending">
+          <div class="pending-icon"><i class="fa-solid fa-clock-rotate-left"></i></div>
+          <h2 class="success-title">Payment Pending</h2>
+          <p class="success-text">We're waiting for blockchain confirmation — typically 2–10 minutes. Your application
+            will be officially submitted once confirmed.</p>
+          <div
+            style="display:flex;align-items:center;gap:var(--space-3);background:var(--gray-50);border:1px solid var(--border-color);border-radius:var(--radius-xl);padding:var(--space-4) var(--space-6);">
+            <div class="spinner" style="border-top-color:var(--color-secondary);"></div>
+            <span style="font-size:var(--text-sm);color:var(--gray-600);">Verifying transaction…</span>
+          </div>
+          <button class="btn btn-primary btn-lg" onclick="simulateConfirmation()" id="verify-btn">
+            <i class="fa-solid fa-rotate"></i> Check Payment Status
+          </button>
+          <p style="font-size:var(--text-xs);color:var(--gray-400);">Click above to confirm
+          </p>
+        </div>
+      </div>
+
+      <!-- SUCCESS VIEW -->
+      <div class="pay-card fade-in" id="view-success" style="display:none;">
+        <div class="payment-success">
+          <div class="success-icon"><i class="fa-solid fa-check"></i></div>
+          <h2 class="success-title">Application Submitted! 🎉</h2>
+          <p class="success-text">
+            Your rental application and processing fee have been received.
+            Our leasing team will review your application and respond within
+            <strong>24–48 hours</strong>.
+          </p>
+          <div
+            style="width:100%;background:var(--gray-50);border:1px solid var(--border-color);border-radius:var(--radius-xl);padding:var(--space-5);display:flex;flex-direction:column;gap:var(--space-3);">
+            <div style="display:flex;justify-content:space-between;font-size:var(--text-sm);">
+              <span style="color:var(--gray-500);">Application Reference</span>
+              <strong style="color:var(--color-primary);" id="app-ref">PH-APP-XXXXXX</strong>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:var(--text-sm);">
+              <span style="color:var(--gray-500);">Payment Status</span>
+              <span class="badge badge-success">Confirmed</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:var(--text-sm);">
+              <span style="color:var(--gray-500);">Application Status</span>
+              <span class="badge badge-gold">Under Review</span>
+            </div>
+          </div>
+          <div style="display:flex;gap:var(--space-3);width:100%;flex-wrap:wrap;">
+            <a href="index.html" class="btn btn-dark" style="flex:1;min-width:160px;"><i class="fa-solid fa-house"></i>
+              Home</a>
+            <a href="search.html" class="btn btn-ghost" style="flex:1;min-width:160px;"><i
+                class="fa-solid fa-magnifying-glass"></i> Browse More</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <div id="footer-container"></div>
+  <div class="toast-container" id="toast-container" aria-live="polite"></div>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/components.js"></script>
+  <script>
+    'use strict';
+    let selectedCrypto = 'BTC';
+    let countdownTimer = null;
+    let appData = null;
+    let propData = null;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      appData = JSON.parse(sessionStorage.getItem('apply_form_data') || 'null');
+      propData = JSON.parse(sessionStorage.getItem('apply_property') || 'null');
+
+      if (!appData || !propData) {
+        Toast.warning('No Application Found', 'Please complete an application first.');
+        setTimeout(() => window.location.href = 'search.html?type=rent', 1500);
+        return;
+      }
+
+      countdownTimer = new CountdownTimer({
+        minutes: CONFIG.PAYMENT_TIMER_MINUTES,
+        onTick: ({ minutes, seconds, totalSeconds }) => {
+          const disp = document.getElementById('countdown-display');
+          const bar = document.getElementById('countdown-bar');
+          if (disp) disp.textContent = String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0');
+          if (bar) bar.classList.toggle('urgent', totalSeconds < 300);
+        },
+        onExpire: () => {
+          const disp = document.getElementById('countdown-display');
+          const bar = document.getElementById('countdown-bar');
+          if (disp) disp.textContent = 'EXPIRED';
+          if (bar) bar.classList.add('urgent');
+          Toast.error('Session Expired', 'Your payment window has expired. Please restart the process.');
+        },
+      });
+      countdownTimer.start();
+
+      if (window.emailjs && CONFIG.EMAILJS_PUBLIC_KEY !== 'PASTE_YOUR_EMAILJS_PUBLIC_KEY_HERE') {
+        emailjs.init(CONFIG.EMAILJS_PUBLIC_KEY);
+      }
+    });
+
+    function selectCrypto(coin, btn) {
+      selectedCrypto = coin;
+      document.querySelectorAll('.crypto-tab').forEach(t => t.classList.remove('active'));
+      btn.classList.add('active');
+      const amounts = { BTC: CONFIG.APPLICATION_FEE_BTC, ETH: CONFIG.APPLICATION_FEE_ETH, BNB: CONFIG.APPLICATION_FEE_BNB };
+      const addrEl = document.getElementById('wallet-address-text');
+      const amtEl = document.getElementById('crypto-amount-display');
+      const coinLbl = document.getElementById('wallet-coin-label');
+      if (addrEl) addrEl.textContent = CONFIG.WALLETS[coin];
+      if (amtEl) amtEl.textContent = amounts[coin] + ' ' + coin;
+      if (coinLbl) coinLbl.textContent = coin;
+    }
+
+    function copyWalletAddress() {
+      copyToClipboard(CONFIG.WALLETS[selectedCrypto], 'Address Copied!', selectedCrypto + ' wallet address copied to clipboard.');
+    }
+
+    function confirmPayment() {
+      countdownTimer?.stop();
+      document.getElementById('view-payment').style.display = 'none';
+      document.getElementById('view-pending').style.display = 'block';
+      Toast.info('Payment Submitted', 'Confirming and sending your application email now\u2026');
+      // Give the user 2 seconds to see the pending state, then send the email
+      setTimeout(sendApplicationEmail, 2000);
+    }
+
+    async function sendApplicationEmail() {
+      const btn = document.getElementById('verify-btn');
+
+      // Guard: EmailJS must be configured
+      if (!window.emailjs) {
+        showEmailError('Email service unavailable. The EmailJS library failed to load.');
+        return;
+      }
+      if (!isEmailJSConfigured()) {
+        showEmailError('Email service unavailable. EmailJS credentials have not been configured. Please contact the administrator.');
+        return;
+      }
+      if (!isEmailTemplateConfigured(CONFIG.EMAILJS_TEMPLATE_APPLICATION)) {
+        showEmailError('Email service unavailable. The application email template has not been configured. Please contact the administrator.');
+        return;
+      }
+
+      if (btn) { btn.classList.add('loading'); btn.disabled = true; }
+
+      const d = appData;
+      const p = propData;
+      const now = new Date().toLocaleString('en-US', { dateStyle: 'full', timeStyle: 'short' });
+
+      const emailParams = {
+        // Property
+        property_name: p.address || 'N/A',
+        property_address: p.address || 'N/A',
+        property_id: p.id || 'N/A',
+        property_price: formatPrice(p.price, p.listingType),
+        property_type: p.type || 'N/A',
+        listing_type: p.listingType === 'rent' ? 'For Rent' : 'For Sale',
+        // Applicant
+        applicant_name: d.fullName,
+        applicant_email: d.email,
+        applicant_phone: d.phone,
+        // Household
+        occupants: d.occupants,
+        income: '$' + formatNumber(d.income),
+        employment: d.employment,
+        employer: d.employer || 'N/A',
+        pets: d.hasPets ? 'Yes \u2014 ' + d.petCount + ' (' + (d.petTypes || 'unspecified') + ')' : 'No',
+        // Lease
+        move_in_date: formatDate(d.moveInDate),
+        lease_duration: d.leaseDuration,
+        // Financial
+        credit_score: d.creditScore,
+        bankruptcy: d.bankruptcy ? 'Yes' : 'No',
+        // Background
+        smoking: d.smoking ? 'Yes' : 'No',
+        eviction: d.eviction ? 'Yes' : 'No',
+        references: d.references || 'None provided',
+        additional_notes: d.notes || 'None',
+        // Payment
+        crypto_currency: selectedCrypto,
+        payment_timestamp: now,
+        submitted_at: now,
+      };
+
+      try {
+        await emailjs.send(CONFIG.EMAILJS_SERVICE_ID, CONFIG.EMAILJS_TEMPLATE_APPLICATION, emailParams);
+
+        // Success
+        const ref = 'PH-APP-' + Math.random().toString(36).slice(2, 8).toUpperCase();
+        document.getElementById('app-ref').textContent = ref;
+        document.getElementById('view-pending').style.display = 'none';
+        document.getElementById('view-success').style.display = 'block';
+        Toast.success('Application Submitted!', 'Your application has been sent. We will be in touch within 24-48 hours.');
+        sessionStorage.removeItem('apply_form_data');
+
+      } catch (err) {
+        console.error('[Application Email] EmailJS send failed:', err);
+        showEmailError('Your application could not be submitted. ' + (err?.text || 'Email service error. Please try again or contact us directly at ' + CONFIG.CONTACT_EMAIL));
+        if (btn) { btn.classList.remove('loading'); btn.disabled = false; }
+      }
+    }
+
+    function showEmailError(msg) {
+      const pending = document.getElementById('view-pending');
+      if (pending) {
+        pending.innerHTML = `
+      <div class="payment-pending" style="gap:var(--space-5);">
+        <div style="width:64px;height:64px;border-radius:50%;background:var(--color-danger-light);color:var(--color-danger);display:flex;align-items:center;justify-content:center;font-size:2rem;">
+          <i class="fa-solid fa-circle-exclamation"></i>
+        </div>
+        <h2 style="font-family:var(--font-display);font-size:var(--text-2xl);font-weight:700;color:var(--color-primary);">Submission Failed</h2>
+        <p style="color:var(--gray-500);line-height:var(--leading-relaxed);max-width:400px;text-align:center;">${msg}</p>
+        <button class="btn btn-primary btn-lg" onclick="sendApplicationEmail()">
+          <i class="fa-solid fa-rotate"></i> Retry Submission
+        </button>
+        <a href="mailto:${CONFIG.CONTACT_EMAIL}" class="btn btn-ghost">
+          <i class="fa-regular fa-envelope"></i> Contact Us Directly
+        </a>
+      </div>
+    `;
+      }
+    }
+  </script>
+</body>
+
+</html>

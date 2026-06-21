@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- SEO Meta Tags -->
+  <meta name="description"
+    content="Prestige Homes — Discover luxury real estate for sale and rent. Find your perfect home among our curated collection of premium properties." />
+  <meta name="keywords"
+    content="luxury real estate, homes for sale, luxury rentals, prestige properties, buy home, rent home" />
+  <meta name="author" content="Prestige Homes" />
+
+  <!-- Open Graph (for social sharing) -->
+  <meta property="og:title" content="Prestige Homes | Luxury Real Estate" />
+  <meta property="og:description"
+    content="Curating the finest residential properties across North America. Find your perfect luxury home." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1613977257592-4871e5fcd7c4?w=1200&auto=format" />
+
+  <title>Prestige Homes | Luxury Real Estate</title>
+
+  <!-- Favicon (inline SVG via data URI) -->
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230F172A'/><text y='.9em' font-size='70' x='12'>🏛</text></svg>" />
+
+  <!-- Preconnect for faster font loading -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <!-- Google Fonts: Playfair Display (luxury headings) + Inter (body) -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+
+  <!-- Font Awesome 6 (Free) — icons throughout the site -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <!-- ─── CSS Load Order — IMPORTANT: must be in this exact order ─── -->
+  <link rel="stylesheet" href="css/variables.css" /> <!-- 1. Design tokens (always first) -->
+  <link rel="stylesheet" href="css/global.css" /> <!-- 2. Reset + utilities -->
+  <link rel="stylesheet" href="css/animations.css" /> <!-- 3. Keyframes + reveal classes -->
+  <link rel="stylesheet" href="css/navbar.css" /> <!-- 4. Navbar styles -->
+  <link rel="stylesheet" href="css/footer.css" /> <!-- 5. Footer styles -->
+  <link rel="stylesheet" href="css/property-card.css" /> <!-- 6. Property card component -->
+  <link rel="stylesheet" href="css/home.css" /> <!-- 7. Home page specific (Phase 2) -->
+</head>
+
+<body>
+
+  <!-- ─────────────────────────────────────────────────────────
+       NAVBAR — Injected dynamically by components.js
+       Do not write navbar HTML here. It lives in components.js.
+       ───────────────────────────────────────────────────────── -->
+  <div id="navbar-container"></div>
+
+
+  <!-- ─────────────────────────────────────────────────────────
+       WELCOME POPUP
+       Shown to first-time visitors, once per 24 hours.
+       Controlled by initWelcomePopup() in utils.js
+       ───────────────────────────────────────────────────────── -->
+  <div id="welcome-popup" class="popup-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="popup-title">
+    <div class="popup-box">
+      <button class="popup-close" id="popup-close-btn" aria-label="Close welcome popup">
+        <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+      </button>
+
+      <div class="popup-badge" aria-hidden="true">✦ Exclusive Access</div>
+
+      <h2 class="popup-title" id="popup-title">
+        Welcome to<br />Prestige Homes
+      </h2>
+
+      <p class="popup-text">
+        Discover a curated world of extraordinary properties.
+        From Manhattan penthouses to Malibu estates —
+        <strong>only the finest 5%</strong> of the market, presented for you.
+      </p>
+
+      <div class="popup-offer">
+        <i class="fa-solid fa-gift" aria-hidden="true"></i>
+        <span>
+          Create a free account and receive <strong>priority access</strong>
+          to off-market listings before they're publicly available.
+        </span>
+      </div>
+
+      <div class="popup-actions">
+        <a href="auth/signup.html" class="btn btn-primary btn-full btn-lg">
+          <i class="fa-solid fa-user-plus" aria-hidden="true"></i>
+          Create Free Account
+        </a>
+        <button class="btn btn-ghost btn-full" id="popup-dismiss-btn">
+          Browse Without Account
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ─────────────────────────────────────────────────────────
+       LIMITED OFFER BANNER
+       Sits above everything after the navbar.
+       Dismissed per session by the X button.
+       ───────────────────────────────────────────────────────── -->
+  <div id="offer-banner" class="offer-banner" role="alert" aria-live="polite">
+    <div class="offer-banner-content">
+      <i class="fa-solid fa-fire-flame-curved offer-icon" aria-hidden="true"></i>
+      <span>
+        🎯 <strong>Limited Offer:</strong>
+        Zero commission on all featured listings this month.
+        <a href="search.html?featured=true" class="offer-link">Explore Featured Properties →</a>
+      </span>
+    </div>
+    <button class="offer-banner-close" id="banner-close-btn" aria-label="Dismiss offer banner">
+      <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+    </button>
+  </div>
+
+
+  <!-- ─────────────────────────────────────────────────────────
+       MAIN CONTENT
+       All sections live inside <main>
+       ───────────────────────────────────────────────────────── -->
+  <main id="main-content">
+
+    <!-- ═══════════════════════════════════════════════════════
+         SECTION 1: HERO
+         Full-viewport, cinematic background, search bar.
+         Built in Phase 2 (home.css + home.js)
+         ═══════════════════════════════════════════════════════ -->
+    <section class="hero" id="hero" aria-label="Property Search Hero">
+      <!-- Content injected by home.js in Phase 2 -->
+      <!-- Placeholder so page renders during Phase 1 -->
+      <div class="hero-placeholder">
+        <div class="hero-placeholder-inner">
+          <p class="luxury-label" style="color:var(--color-secondary); margin-bottom: var(--space-4);">
+            Phase 1 Complete ✓
+          </p>
+          <h1
+            style="color:white; font-family:var(--font-display); font-size:clamp(2rem,5vw,4rem); margin-bottom:var(--space-4);">
+            Foundation is Live
+          </h1>
+          <p style="color:rgba(255,255,255,0.7); font-size:1.125rem; max-width:600px; margin:0 auto var(--space-8);">
+            Navbar · Footer · Design System · Toast System · Scroll Reveal ·
+            Property Cards · Utils · Config — all working.
+            <br /><br />
+            The full home page hero, search, and listings come in <strong style="color:var(--color-secondary);">Phase
+              2</strong>.
+          </p>
+          <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+            <a href="search.html" class="btn btn-primary btn-lg">
+              <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+              Browse Properties
+            </a>
+            <a href="auth/signup.html" class="btn btn-ghost-light btn-lg">
+              Create Account
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════════════════
+         SECTION 2: STATS / TRUST BAR
+         Built in Phase 2
+         ═══════════════════════════════════════════════════════ -->
+    <section class="trust-bar" id="trust-bar" aria-label="Company statistics">
+      <!-- Built in Phase 2 -->
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════════════════
+         SECTION 3: FEATURED LISTINGS
+         Built in Phase 2
+         ═══════════════════════════════════════════════════════ -->
+    <section class="section featured-listings" id="featured" aria-label="Featured property listings">
+      <!-- Built in Phase 2 -->
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════════════════
+         SECTION 4: HOW IT WORKS
+         Built in Phase 2
+         ═══════════════════════════════════════════════════════ -->
+    <section class="section how-it-works" id="how-it-works" aria-label="How Prestige Homes works">
+      <!-- Built in Phase 2 -->
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════════════════
+         SECTION 5: TRENDING PROPERTIES
+         Built in Phase 2
+         ═══════════════════════════════════════════════════════ -->
+    <section class="section trending-properties" id="trending" aria-label="Trending properties">
+      <!-- Built in Phase 2 -->
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════════════════
+         SECTION 6: MARKET NEWS / INSIGHTS
+         Built in Phase 2
+         ═══════════════════════════════════════════════════════ -->
+    <section class="section news-section" id="news" aria-label="Market news and insights">
+      <!-- Built in Phase 2 -->
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════════════════
+         SECTION 7: TESTIMONIALS
+         Built in Phase 2
+         ═══════════════════════════════════════════════════════ -->
+    <section class="section testimonials-section" id="testimonials" aria-label="Client testimonials">
+      <!-- Built in Phase 2 -->
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════════════════
+         SECTION 8: ABOUT / WHY US
+         Built in Phase 2
+         ═══════════════════════════════════════════════════════ -->
+    <section class="section why-us-section" id="about" aria-label="Why choose Prestige Homes">
+      <!-- Built in Phase 2 -->
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════════════════
+         SECTION 9: FAQ
+         Built in Phase 2
+         ═══════════════════════════════════════════════════════ -->
+    <section class="section faq-section" id="faq" aria-label="Frequently asked questions">
+      <!-- Built in Phase 2 -->
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════════════════
+         SECTION 10: NEWSLETTER
+         Built in Phase 2
+         ═══════════════════════════════════════════════════════ -->
+    <section class="section newsletter-section" id="newsletter" aria-label="Newsletter signup">
+      <!-- Built in Phase 2 -->
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════════════════
+         SECTION 11: CONTACT
+         Built in Phase 2
+         ═══════════════════════════════════════════════════════ -->
+    <section class="section contact-section" id="contact" aria-label="Contact us">
+      <!-- Built in Phase 2 -->
+    </section>
+
+  </main>
+
+
+  <!-- ─────────────────────────────────────────────────────────
+       FOOTER — Injected dynamically by components.js
+       ───────────────────────────────────────────────────────── -->
+  <div id="footer-container"></div>
+
+
+  <!-- ─────────────────────────────────────────────────────────
+       BACK TO TOP BUTTON
+       Appears after user scrolls 400px.
+       Controlled by initBackToTop() in utils.js
+       ───────────────────────────────────────────────────────── -->
+  <button class="back-to-top hidden" id="back-to-top" aria-label="Scroll back to top" title="Back to top">
+    <i class="fa-solid fa-chevron-up" aria-hidden="true"></i>
+  </button>
+
+
+  <!-- ─────────────────────────────────────────────────────────
+       TOAST NOTIFICATION CONTAINER
+       Toasts appear here. Controlled by Toast.* in utils.js
+       aria-live="polite" announces them to screen readers
+       ───────────────────────────────────────────────────────── -->
+  <div class="toast-container" id="toast-container" aria-live="polite" aria-atomic="false" aria-relevant="additions">
+  </div>
+
+
+
+  <!-- ─────────────────────────────────────────────────────────
+       JAVASCRIPT — Load Order Matters!
+       
+       1. config.js   → All constants (must be first)
+       2. utils.js    → Toast, helpers (needs config)
+       3. components.js → Navbar/footer injection (needs utils)
+       4. home.js     → Page-specific logic (Phase 2)
+       ───────────────────────────────────────────────────────── -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/home.js"></script>
+
+</body>
+
+</html>

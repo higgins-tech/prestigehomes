@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rental Application | Prestige Homes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/navbar.css" />
+  <link rel="stylesheet" href="css/footer.css" />
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230F172A'/><text y='.9em' font-size='70' x='12'>🏛</text></svg>" />
+  <style>
+    .apply-page {
+      padding-top: var(--navbar-height);
+      min-height: 100vh;
+      background: var(--gray-50);
+    }
+
+    .apply-container {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: var(--space-10) var(--space-6);
+    }
+
+    /* Progress bar */
+    .apply-progress-wrap {
+      margin-bottom: var(--space-8);
+    }
+
+    .apply-progress-track {
+      height: 6px;
+      background: var(--gray-200);
+      border-radius: var(--radius-full);
+      overflow: hidden;
+    }
+
+    .apply-progress-fill {
+      height: 100%;
+      background: linear-gradient(to right, var(--color-secondary), var(--color-secondary-light));
+      border-radius: var(--radius-full);
+      transition: width var(--transition-slow) var(--ease-luxury);
+      width: 12.5%;
+    }
+
+    .apply-progress-labels {
+      display: flex;
+      justify-content: space-between;
+      margin-top: var(--space-2);
+      font-size: var(--text-xs);
+      color: var(--gray-400);
+    }
+
+    .apply-progress-labels span.active {
+      color: var(--color-secondary-dark);
+      font-weight: var(--weight-semibold);
+    }
+
+    /* Card */
+    .apply-card {
+      background: var(--color-white);
+      border-radius: var(--radius-3xl);
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-card);
+      padding: var(--space-8);
+    }
+
+    .apply-step-header {
+      margin-bottom: var(--space-6);
+    }
+
+    .apply-step-eyebrow {
+      font-size: var(--text-xs);
+      font-weight: var(--weight-semibold);
+      letter-spacing: var(--tracking-widest);
+      text-transform: uppercase;
+      color: var(--color-secondary);
+      margin-bottom: var(--space-2);
+    }
+
+    .apply-step-title {
+      font-family: var(--font-display);
+      font-size: var(--text-3xl);
+      font-weight: var(--weight-bold);
+      color: var(--color-primary);
+      margin-bottom: var(--space-2);
+    }
+
+    .apply-step-sub {
+      font-size: var(--text-sm);
+      color: var(--gray-500);
+    }
+
+    .apply-form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-4);
+    }
+
+    .apply-form-grid .full {
+      grid-column: 1 / -1;
+    }
+
+    /* Radio/option cards */
+    .option-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-3);
+    }
+
+    .option-card {
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-xl);
+      padding: var(--space-4);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    .option-card:hover {
+      border-color: var(--gray-300);
+    }
+
+    .option-card.selected {
+      border-color: var(--color-secondary);
+      background: var(--color-secondary-muted);
+    }
+
+    .option-card input {
+      accent-color: var(--color-primary);
+      width: 18px;
+      height: 18px;
+    }
+
+    .option-card-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-lg);
+      background: var(--gray-100);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gray-500);
+    }
+
+    .option-card.selected .option-card-icon {
+      background: var(--color-secondary);
+      color: var(--color-primary);
+    }
+
+    .option-card-label {
+      font-size: var(--text-sm);
+      font-weight: var(--weight-medium);
+      color: var(--color-primary);
+    }
+
+    /* Nav buttons */
+    .apply-nav {
+      display: flex;
+      gap: var(--space-3);
+      margin-top: var(--space-8);
+    }
+
+    .apply-nav .btn {
+      flex: 1;
+    }
+
+    /* Pets number stepper */
+    .qty-stepper {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    .qty-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-lg);
+      border: 1.5px solid var(--border-color);
+      background: var(--color-white);
+      font-size: var(--text-lg);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all var(--transition-fast);
+      color: var(--gray-600);
+    }
+
+    .qty-btn:hover {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+    }
+
+    .qty-value {
+      font-size: var(--text-xl);
+      font-weight: var(--weight-bold);
+      color: var(--color-primary);
+      min-width: 40px;
+      text-align: center;
+    }
+
+    /* Review summary */
+    .review-section {
+      margin-bottom: var(--space-5);
+    }
+
+    .review-section-title {
+      font-size: var(--text-xs);
+      font-weight: var(--weight-semibold);
+      letter-spacing: var(--tracking-wide);
+      text-transform: uppercase;
+      color: var(--color-secondary-dark);
+      margin-bottom: var(--space-3);
+      padding-bottom: var(--space-2);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .review-row {
+      display: flex;
+      justify-content: space-between;
+      padding: var(--space-1-5) 0;
+      font-size: var(--text-sm);
+    }
+
+    .review-row .label {
+      color: var(--gray-500);
+    }
+
+    .review-row .value {
+      color: var(--color-primary);
+      font-weight: var(--weight-medium);
+      text-align: right;
+    }
+
+    /* Decision overlay */
+    .decision-overlay {
+      position: fixed;
+      inset: 0;
+      background: var(--bg-overlay-heavy);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: var(--z-modal);
+      padding: var(--space-4);
+    }
+
+    .decision-overlay.hidden {
+      display: none;
+    }
+
+    .decision-box {
+      background: var(--color-white);
+      border-radius: var(--radius-3xl);
+      box-shadow: var(--shadow-modal);
+      padding: var(--space-10) var(--space-8);
+      max-width: 440px;
+      text-align: center;
+      animation: bounce-in 0.6s var(--ease-spring);
+    }
+
+    .decision-icon {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: var(--color-success-light);
+      color: var(--color-success);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      margin: 0 auto var(--space-5);
+    }
+
+    .decision-title {
+      font-family: var(--font-display);
+      font-size: var(--text-3xl);
+      font-weight: var(--weight-bold);
+      color: var(--color-primary);
+      margin-bottom: var(--space-3);
+    }
+
+    .decision-text {
+      font-size: var(--text-base);
+      color: var(--gray-500);
+      line-height: var(--leading-relaxed);
+      margin-bottom: var(--space-6);
+    }
+
+    /* Property mini reminder */
+    .apply-property-strip {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      background: var(--gray-50);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-xl);
+      padding: var(--space-3);
+      margin-bottom: var(--space-6);
+    }
+
+    .apply-property-strip img {
+      width: 56px;
+      height: 48px;
+      border-radius: var(--radius-md);
+      object-fit: cover;
+    }
+
+    .apply-property-strip-text {
+      font-size: var(--text-sm);
+    }
+
+    .apply-property-strip-addr {
+      font-weight: var(--weight-semibold);
+      color: var(--color-primary);
+    }
+
+    .apply-property-strip-price {
+      color: var(--color-secondary-dark);
+      font-size: var(--text-xs);
+    }
+
+    @media (max-width: 600px) {
+      .apply-form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .option-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .apply-card {
+        padding: var(--space-5);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="navbar-container"></div>
+
+  <main class="apply-page">
+    <div class="apply-container">
+
+      <!-- Progress -->
+      <div class="apply-progress-wrap">
+        <div class="apply-progress-track">
+          <div class="apply-progress-fill" id="progress-fill"></div>
+        </div>
+        <div class="apply-progress-labels">
+          <span id="label-1" class="active">Personal</span>
+          <span id="label-2">Household</span>
+          <span id="label-3">Lease</span>
+          <span id="label-4">Financial</span>
+          <span id="label-5">Background</span>
+          <span id="label-6">Review</span>
+          <span id="label-7">Submitted</span>
+        </div>
+      </div>
+
+      <div class="apply-card">
+
+        <!-- Property reminder strip -->
+        <div class="apply-property-strip" id="apply-property-strip"></div>
+
+        <!-- ═══ STEP 1: Personal Information ═══ -->
+        <div class="apply-step" id="step-1">
+          <div class="apply-step-header">
+            <div class="apply-step-eyebrow">Step 1 of 6</div>
+            <h1 class="apply-step-title">Personal Information</h1>
+            <p class="apply-step-sub">Let's start with the basics. This information will be shared with the property
+              owner.</p>
+          </div>
+
+          <div class="apply-form-grid">
+            <div class="form-group full">
+              <label class="form-label" for="f-name">Full Name <span class="required">*</span></label>
+              <div class="input-wrapper">
+                <i class="fa-regular fa-user input-icon"></i>
+                <input type="text" class="form-input with-icon-left" id="f-name" placeholder="John Smith" required />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="f-email">Email Address <span class="required">*</span></label>
+              <div class="input-wrapper">
+                <i class="fa-regular fa-envelope input-icon"></i>
+                <input type="email" class="form-input with-icon-left" id="f-email" placeholder="you@email.com"
+                  required />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="f-phone">Phone Number <span class="required">*</span></label>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-phone input-icon"></i>
+                <input type="tel" class="form-input with-icon-left" id="f-phone" placeholder="+1 (555) 000-0000"
+                  required />
+              </div>
+            </div>
+          </div>
+
+          <div class="apply-nav">
+            <button class="btn btn-primary btn-lg" onclick="nextStep(1)">
+              Continue <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- ═══ STEP 2: Household Information ═══ -->
+        <div class="apply-step" id="step-2" style="display:none;">
+          <div class="apply-step-header">
+            <div class="apply-step-eyebrow">Step 2 of 6</div>
+            <h1 class="apply-step-title">Household Information</h1>
+            <p class="apply-step-sub">Tell us about who will be living in the property and your employment.</p>
+          </div>
+
+          <div class="apply-form-grid">
+            <div class="form-group">
+              <label class="form-label" for="f-occupants">Number of Occupants <span class="required">*</span></label>
+              <select class="form-select" id="f-occupants" required>
+                <option value="">Select</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6+</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="f-income">Annual Household Income <span class="required">*</span></label>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-dollar-sign input-icon"></i>
+                <input type="number" class="form-input with-icon-left" id="f-income" placeholder="120000" required />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="f-employment">Employment Status <span class="required">*</span></label>
+              <select class="form-select" id="f-employment" required onchange="toggleEmployer()">
+                <option value="">Select</option>
+                <option>Employed Full-Time</option>
+                <option>Employed Part-Time</option>
+                <option>Self-Employed</option>
+                <option>Business Owner</option>
+                <option>Retired</option>
+                <option>Student</option>
+                <option>Unemployed</option>
+              </select>
+            </div>
+            <div class="form-group" id="employer-group">
+              <label class="form-label" for="f-employer">Employer Name</label>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-building input-icon"></i>
+                <input type="text" class="form-input with-icon-left" id="f-employer" placeholder="Company name" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Pets -->
+          <div style="margin-top:var(--space-6);">
+            <label class="form-label" style="margin-bottom:var(--space-3);display:block;">Do you have pets?</label>
+            <div class="option-grid" id="pets-toggle">
+              <div class="option-card selected" onclick="selectPets(false, this)">
+                <div class="option-card-icon"><i class="fa-solid fa-xmark"></i></div>
+                <span class="option-card-label">No Pets</span>
+              </div>
+              <div class="option-card" onclick="selectPets(true, this)">
+                <div class="option-card-icon"><i class="fa-solid fa-paw"></i></div>
+                <span class="option-card-label">Yes, I have pets</span>
+              </div>
+            </div>
+          </div>
+
+          <div id="pet-details" style="display:none;margin-top:var(--space-4);">
+            <div class="apply-form-grid">
+              <div class="form-group">
+                <label class="form-label" for="f-pet-count">Number of Pets</label>
+                <div class="qty-stepper">
+                  <button class="qty-btn" onclick="changeQty('f-pet-count',-1)" type="button">−</button>
+                  <span class="qty-value" id="f-pet-count-display">1</span>
+                  <button class="qty-btn" onclick="changeQty('f-pet-count',1)" type="button">+</button>
+                  <input type="hidden" id="f-pet-count" value="1" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="f-pet-types">Pet Type(s)</label>
+                <input type="text" class="form-input" id="f-pet-types" placeholder="e.g. Dog (Labrador), Cat" />
+              </div>
+            </div>
+          </div>
+
+          <div class="apply-nav">
+            <button class="btn btn-ghost btn-lg" onclick="prevStep(2)"><i class="fa-solid fa-arrow-left"></i>
+              Back</button>
+            <button class="btn btn-primary btn-lg" onclick="nextStep(2)">Continue <i
+                class="fa-solid fa-arrow-right"></i></button>
+          </div>
+        </div>
+
+        <!-- ═══ STEP 3: Lease Details ═══ -->
+        <div class="apply-step" id="step-3" style="display:none;">
+          <div class="apply-step-header">
+            <div class="apply-step-eyebrow">Step 3 of 6</div>
+            <h1 class="apply-step-title">Lease Details</h1>
+            <p class="apply-step-sub">When would you like to move in, and for how long?</p>
+          </div>
+
+          <div class="apply-form-grid">
+            <div class="form-group">
+              <label class="form-label" for="f-movein">Desired Move-In Date <span class="required">*</span></label>
+              <input type="date" class="form-input" id="f-movein" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="f-lease">Lease Duration <span class="required">*</span></label>
+              <select class="form-select" id="f-lease" required>
+                <option value="">Select</option>
+                <option>6 Months</option>
+                <option>12 Months</option>
+                <option>18 Months</option>
+                <option>24 Months</option>
+                <option>Month-to-Month</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="apply-nav">
+            <button class="btn btn-ghost btn-lg" onclick="prevStep(3)"><i class="fa-solid fa-arrow-left"></i>
+              Back</button>
+            <button class="btn btn-primary btn-lg" onclick="nextStep(3)">Continue <i
+                class="fa-solid fa-arrow-right"></i></button>
+          </div>
+        </div>
+
+        <!-- ═══ STEP 4: Financial Information ═══ -->
+        <div class="apply-step" id="step-4" style="display:none;">
+          <div class="apply-step-header">
+            <div class="apply-step-eyebrow">Step 4 of 6</div>
+            <h1 class="apply-step-title">Financial Information</h1>
+            <p class="apply-step-sub">This helps us match you with properties that fit your budget.</p>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="f-credit">Credit Score Range <span class="required">*</span></label>
+            <select class="form-select" id="f-credit" required>
+              <option value="">Select</option>
+              <option>Excellent (750+)</option>
+              <option>Good (700–749)</option>
+              <option>Fair (650–699)</option>
+              <option>Poor (600–649)</option>
+              <option>Below 600</option>
+              <option>I don't know</option>
+            </select>
+          </div>
+
+          <div style="margin-top:var(--space-5);">
+            <label class="form-label" style="margin-bottom:var(--space-3);display:block;">Have you filed for bankruptcy
+              in the last 7 years?</label>
+            <div class="option-grid" id="bankruptcy-toggle">
+              <div class="option-card selected" onclick="selectBankruptcy(false, this)">
+                <div class="option-card-icon"><i class="fa-solid fa-check"></i></div>
+                <span class="option-card-label">No</span>
+              </div>
+              <div class="option-card" onclick="selectBankruptcy(true, this)">
+                <div class="option-card-icon"><i class="fa-solid fa-circle-info"></i></div>
+                <span class="option-card-label">Yes</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="apply-nav">
+            <button class="btn btn-ghost btn-lg" onclick="prevStep(4)"><i class="fa-solid fa-arrow-left"></i>
+              Back</button>
+            <button class="btn btn-primary btn-lg" onclick="nextStep(4)">Continue <i
+                class="fa-solid fa-arrow-right"></i></button>
+          </div>
+        </div>
+
+        <!-- ═══ STEP 5: Background ═══ -->
+        <div class="apply-step" id="step-5" style="display:none;">
+          <div class="apply-step-header">
+            <div class="apply-step-eyebrow">Step 5 of 6</div>
+            <h1 class="apply-step-title">Background Information</h1>
+            <p class="apply-step-sub">A few final questions, plus any additional notes for the property owner.</p>
+          </div>
+
+          <div style="margin-bottom:var(--space-5);">
+            <label class="form-label" style="margin-bottom:var(--space-3);display:block;">Do you smoke?</label>
+            <div class="option-grid" id="smoking-toggle">
+              <div class="option-card selected" onclick="selectToggle('smoking',false, this)">
+                <div class="option-card-icon"><i class="fa-solid fa-ban"></i></div>
+                <span class="option-card-label">No</span>
+              </div>
+              <div class="option-card" onclick="selectToggle('smoking',true, this)">
+                <div class="option-card-icon"><i class="fa-solid fa-smoking"></i></div>
+                <span class="option-card-label">Yes</span>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-bottom:var(--space-5);">
+            <label class="form-label" style="margin-bottom:var(--space-3);display:block;">Have you been evicted
+              before?</label>
+            <div class="option-grid" id="eviction-toggle">
+              <div class="option-card selected" onclick="selectToggle('eviction',false, this)">
+                <div class="option-card-icon"><i class="fa-solid fa-check"></i></div>
+                <span class="option-card-label">No</span>
+              </div>
+              <div class="option-card" onclick="selectToggle('eviction',true, this)">
+                <div class="option-card-icon"><i class="fa-solid fa-circle-info"></i></div>
+                <span class="option-card-label">Yes</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="f-references">References (Name & Contact)</label>
+            <textarea class="form-input form-textarea" id="f-references" rows="2"
+              placeholder="e.g. Jane Doe (Previous Landlord) — (555) 123-4567"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="f-notes">Additional Notes</label>
+            <textarea class="form-input form-textarea" id="f-notes" rows="3"
+              placeholder="Anything else you'd like the property owner to know..."></textarea>
+          </div>
+
+          <div class="apply-nav">
+            <button class="btn btn-ghost btn-lg" onclick="prevStep(5)"><i class="fa-solid fa-arrow-left"></i>
+              Back</button>
+            <button class="btn btn-primary btn-lg" onclick="nextStep(5)">Review Application <i
+                class="fa-solid fa-arrow-right"></i></button>
+          </div>
+        </div>
+
+        <!-- ═══ STEP 6: Review ═══ -->
+        <div class="apply-step" id="step-6" style="display:none;">
+          <div class="apply-step-header">
+            <div class="apply-step-eyebrow">Step 6 of 6</div>
+            <h1 class="apply-step-title">Review Your Application</h1>
+            <p class="apply-step-sub">Please review all information before submitting.</p>
+          </div>
+
+          <div id="review-content"></div>
+
+          <label class="auth-terms" style="margin-top:var(--space-6);">
+            <input type="checkbox" id="apply-confirm" required />
+            <span>I confirm that all information provided is accurate and complete to the best of my knowledge.</span>
+          </label>
+
+          <div class="apply-nav">
+            <button class="btn btn-ghost btn-lg" onclick="prevStep(6)"><i class="fa-solid fa-arrow-left"></i>
+              Back</button>
+            <button class="btn btn-dark btn-lg" id="submit-application-btn" onclick="submitApplication()">
+              <i class="fa-solid fa-paper-plane"></i> Submit Application
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Decision Overlay -->
+  <div class="decision-overlay hidden" id="decision-overlay">
+    <div class="decision-box">
+      <div class="decision-icon"><i class="fa-solid fa-circle-check"></i></div>
+      <h2 class="decision-title">Congratulations!</h2>
+      <p class="decision-text">
+        Based on your responses, you are <strong>eligible to continue</strong> your application.
+        To finalize your application and reserve the property, please complete the
+        application processing fee.
+      </p>
+      <button class="btn btn-primary btn-full btn-lg" onclick="goToApplicationPayment()">
+        <i class="fa-solid fa-arrow-right"></i> Continue to Payment
+      </button>
+    </div>
+  </div>
+
+  <div id="footer-container"></div>
+  <div class="toast-container" id="toast-container" aria-live="polite"></div>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/apply.js"></script>
+</body>
+
+</html>

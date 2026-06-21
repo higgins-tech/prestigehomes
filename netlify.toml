@@ -1,0 +1,65 @@
+# ============================================================
+# PRESTIGE HOMES — NETLIFY CONFIGURATION
+# ============================================================
+# This file configures how Netlify builds and serves the site.
+# Place this in the ROOT of your project (same level as index.html)
+# ============================================================
+
+[build]
+  publish = "."
+
+# ─────────────────────────────────────────────────────────────
+# REDIRECTS
+# ─────────────────────────────────────────────────────────────
+
+# Redirect old-style URLs without .html (optional, nice for clean URLs)
+[[redirects]]
+  from = "/login"
+  to = "/auth/login.html"
+  status = 301
+
+[[redirects]]
+  from = "/signup"
+  to = "/auth/signup.html"
+  status = 301
+
+[[redirects]]
+  from = "/properties"
+  to = "/search.html"
+  status = 301
+
+# 404 fallback — must be last
+[[redirects]]
+  from = "/*"
+  to = "/404.html"
+  status = 404
+
+# ─────────────────────────────────────────────────────────────
+# HEADERS — Security & Performance
+# ─────────────────────────────────────────────────────────────
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(self)"
+
+# Cache CSS and JS aggressively (versioned via filename if needed)
+[[headers]]
+  for = "/css/*"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"
+
+[[headers]]
+  for = "/js/*"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"
+
+# Don't cache HTML so updates show immediately
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"

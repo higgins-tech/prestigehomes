@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Create Account | Prestige Homes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="../css/variables.css" />
+  <link rel="stylesheet" href="../css/global.css" />
+  <link rel="stylesheet" href="../css/animations.css" />
+  <link rel="stylesheet" href="../css/auth.css" />
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230F172A'/><text y='.9em' font-size='70' x='12'>🏛</text></svg>" />
+</head>
+
+<body>
+
+  <div class="auth-page">
+
+    <!-- LEFT: Visual -->
+    <div class="auth-visual" aria-hidden="true">
+      <div class="auth-visual-bg">
+        <img src="https://images.unsplash.com/photo-1613977257592-4871e5fcd7c4?w=1200&auto=format&q=80" alt="" />
+      </div>
+      <div class="auth-visual-overlay"></div>
+      <div class="auth-visual-content">
+        <a href="../index.html" class="auth-visual-logo">
+          <div class="auth-visual-logo-icon"><i class="fa-solid fa-building-columns"></i></div>
+          <div>
+            <div class="auth-visual-logo-name">Prestige Homes</div>
+            <div class="auth-visual-logo-tagline">Luxury Real Estate</div>
+          </div>
+        </a>
+
+        <!-- Benefits list -->
+        <div style="display:flex;flex-direction:column;gap:var(--space-4);">
+          <p
+            style="font-family:var(--font-display);font-size:var(--text-3xl);font-weight:700;color:white;line-height:1.2;">
+            Your luxury journey<br />starts here.
+          </p>
+          <div style="display:flex;flex-direction:column;gap:var(--space-3);">
+            <div style="display:flex;align-items:center;gap:var(--space-3);">
+              <div
+                style="width:36px;height:36px;border-radius:var(--radius-lg);background:rgba(212,175,55,0.12);border:1px solid rgba(212,175,55,0.25);display:flex;align-items:center;justify-content:center;color:var(--color-secondary);font-size:var(--text-sm);flex-shrink:0;">
+                <i class="fa-solid fa-heart"></i>
+              </div>
+              <span style="color:rgba(255,255,255,0.75);font-size:var(--text-sm);">Save unlimited listings</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:var(--space-3);">
+              <div
+                style="width:36px;height:36px;border-radius:var(--radius-lg);background:rgba(212,175,55,0.12);border:1px solid rgba(212,175,55,0.25);display:flex;align-items:center;justify-content:center;color:var(--color-secondary);font-size:var(--text-sm);flex-shrink:0;">
+                <i class="fa-solid fa-bell"></i>
+              </div>
+              <span style="color:rgba(255,255,255,0.75);font-size:var(--text-sm);">Get notified on new properties</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:var(--space-3);">
+              <div
+                style="width:36px;height:36px;border-radius:var(--radius-lg);background:rgba(212,175,55,0.12);border:1px solid rgba(212,175,55,0.25);display:flex;align-items:center;justify-content:center;color:var(--color-secondary);font-size:var(--text-sm);flex-shrink:0;">
+                <i class="fa-solid fa-calendar"></i>
+              </div>
+              <span style="color:rgba(255,255,255,0.75);font-size:var(--text-sm);">Book tours with one click</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:var(--space-3);">
+              <div
+                style="width:36px;height:36px;border-radius:var(--radius-lg);background:rgba(212,175,55,0.12);border:1px solid rgba(212,175,55,0.25);display:flex;align-items:center;justify-content:center;color:var(--color-secondary);font-size:var(--text-sm);flex-shrink:0;">
+                <i class="fa-solid fa-chart-line"></i>
+              </div>
+              <span style="color:rgba(255,255,255,0.75);font-size:var(--text-sm);">Track market trends</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:var(--space-3);">
+              <div
+                style="width:36px;height:36px;border-radius:var(--radius-lg);background:rgba(212,175,55,0.12);border:1px solid rgba(212,175,55,0.25);display:flex;align-items:center;justify-content:center;color:var(--color-secondary);font-size:var(--text-sm);flex-shrink:0;">
+                <i class="fa-solid fa-envelope"></i>
+              </div>
+              <span style="color:rgba(255,255,255,0.75);font-size:var(--text-sm);">Priority advisor access</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Form -->
+    <div class="auth-form-panel">
+      <div class="auth-form-inner fade-in">
+
+        <a href="../index.html" class="auth-mobile-logo">
+          <div class="auth-mobile-logo-icon"><i class="fa-solid fa-building-columns"></i></div>
+          <span class="auth-mobile-logo-name">Prestige Homes</span>
+        </a>
+
+        <!-- Success State (shown after email sent) -->
+        <div class="auth-success-box hidden" id="success-box">
+          <i class="fa-solid fa-envelope-circle-check"></i>
+          <strong>Check your inbox!</strong>
+          <p id="success-msg">We've sent a confirmation link to your email. Click it to activate your account — then
+            sign in.</p>
+          <a href="login.html" class="btn btn-dark btn-full" style="margin-top:var(--space-2);">
+            <i class="fa-solid fa-arrow-right-to-bracket"></i> Go to Sign In
+          </a>
+        </div>
+
+        <!-- Form State -->
+        <div id="form-state">
+          <div class="auth-form-header">
+            <div class="auth-form-eyebrow">New Member</div>
+            <h1 class="auth-form-title">Create Your Account</h1>
+            <p class="auth-form-subtitle">Free forever. Access exclusive listings, save favourites, and book tours.</p>
+          </div>
+
+          <div class="auth-error-box hidden" id="error-box" role="alert">
+            <i class="fa-solid fa-circle-exclamation"></i>
+            <span id="error-msg"></span>
+          </div>
+
+          <form class="auth-form" id="signup-form" novalidate>
+
+            <!-- Name row -->
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4);">
+              <div class="form-group">
+                <label class="form-label" for="first-name">First Name <span class="required">*</span></label>
+                <div class="input-wrapper">
+                  <i class="fa-regular fa-user input-icon"></i>
+                  <input type="text" class="form-input with-icon-left" id="first-name" placeholder="First"
+                    autocomplete="given-name" required />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="last-name">Last Name <span class="required">*</span></label>
+                <input type="text" class="form-input" id="last-name" placeholder="Last" autocomplete="family-name"
+                  required />
+              </div>
+            </div>
+
+            <!-- Email -->
+            <div class="form-group">
+              <label class="form-label" for="email">Email Address <span class="required">*</span></label>
+              <div class="input-wrapper">
+                <i class="fa-regular fa-envelope input-icon"></i>
+                <input type="email" class="form-input with-icon-left" id="email" placeholder="your@email.com"
+                  autocomplete="email" required />
+              </div>
+            </div>
+
+            <!-- Password -->
+            <div class="form-group">
+              <label class="form-label" for="password">Password <span class="required">*</span></label>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-lock input-icon"></i>
+                <input type="password" class="form-input with-icon-left with-icon-right" id="password"
+                  placeholder="Create a strong password" autocomplete="new-password" required
+                  oninput="checkPasswordStrength(this.value)" />
+                <button type="button" class="input-icon-right" id="toggle-pw" aria-label="Toggle password visibility"
+                  onclick="togglePw('password','toggle-pw')">
+                  <i class="fa-regular fa-eye"></i>
+                </button>
+              </div>
+              <!-- Strength meter -->
+              <div class="password-strength" id="strength-wrap" style="display:none;">
+                <div class="strength-bar-track">
+                  <div class="strength-bar-fill" id="strength-bar"></div>
+                </div>
+                <span class="strength-label" id="strength-label"></span>
+              </div>
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="form-group">
+              <label class="form-label" for="confirm-password">Confirm Password <span class="required">*</span></label>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-lock input-icon"></i>
+                <input type="password" class="form-input with-icon-left with-icon-right" id="confirm-password"
+                  placeholder="Repeat your password" autocomplete="new-password" required />
+                <button type="button" class="input-icon-right" id="toggle-cpw" aria-label="Toggle password visibility"
+                  onclick="togglePw('confirm-password','toggle-cpw')">
+                  <i class="fa-regular fa-eye"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Terms -->
+            <label class="auth-terms">
+              <input type="checkbox" id="agree-terms" required />
+              <span>
+                I agree to the
+                <a href="../terms.html">Terms of Service</a>
+                and
+                <a href="../privacy.html">Privacy Policy</a>.
+                I understand this platform.
+              </span>
+            </label>
+
+            <!-- Submit -->
+            <button type="submit" class="btn btn-dark btn-full btn-lg" id="submit-btn">
+              <i class="fa-solid fa-user-plus"></i>
+              Create Account
+            </button>
+
+          </form>
+
+          <p class="auth-form-footer" style="margin-top:var(--space-6);">
+            Already have an account? <a href="login.html">Sign In</a>
+          </p>
+        </div><!-- /form-state -->
+
+      </div>
+    </div>
+
+  </div>
+
+  <div class="toast-container" id="toast-container" aria-live="polite"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/config.js"></script>
+  <script src="../js/utils.js"></script>
+  <script src="../js/supabase-client.js"></script>
+  <script>
+    'use strict';
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      if (!isSupabaseConfigured()) {
+        document.getElementById('error-msg').textContent = 'Supabase credentials have not been configured. Please contact the administrator.';
+        document.getElementById('error-box').classList.remove('hidden');
+        document.getElementById('submit-btn').disabled = true;
+        return;
+      }
+
+      const user = await getCurrentUser();
+      if (user) { window.location.href = '../index.html'; return; }
+
+      document.getElementById('signup-form').addEventListener('submit', handleSignup);
+    });
+
+    async function handleSignup(e) {
+      e.preventDefault();
+
+      const firstName = document.getElementById('first-name').value.trim();
+      const lastName = document.getElementById('last-name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const confirmPw = document.getElementById('confirm-password').value;
+      const agreed = document.getElementById('agree-terms').checked;
+      const btn = document.getElementById('submit-btn');
+
+      if (!firstName || !lastName || !email || !password) {
+        showError('Please fill in all required fields.'); return;
+      }
+      if (!email.includes('@') || !email.includes('.')) {
+        showError('Please enter a valid email address.'); return;
+      }
+      if (password.length < 8) {
+        showError('Password must be at least 8 characters long.'); return;
+      }
+      if (password !== confirmPw) {
+        showError('Passwords do not match. Please check and try again.'); return;
+      }
+      if (!agreed) {
+        showError('You must agree to the Terms of Service to continue.'); return;
+      }
+      if (!supabaseClient) {
+        showError('Supabase credentials have not been configured. Please contact the administrator.'); return;
+      }
+
+      hideError();
+      btn.classList.add('loading');
+      btn.disabled = true;
+
+      try {
+        const { data, error } = await supabaseClient.auth.signUp({
+          email,
+          password,
+          options: {
+            data: {
+              full_name: firstName + ' ' + lastName,
+              first_name: firstName,
+              last_name: lastName,
+            },
+            emailRedirectTo: window.location.origin + '/auth/login.html',
+          },
+        });
+
+        if (error) {
+          let msg = error.message || 'Signup failed. Please try again.';
+          if (msg.includes('already registered')) msg = 'An account with this email already exists. Try signing in instead.';
+          if (msg.includes('password')) msg = 'Password must be at least 6 characters.';
+          showError(msg); return;
+        }
+
+        showSuccess('We\'ve sent a confirmation email to ' + email + '. Click the link inside to activate your account, then sign in.');
+
+      } catch (err) {
+        console.error('[Signup]', err);
+        showError('An unexpected error occurred. Please try again.');
+      } finally {
+        btn.classList.remove('loading');
+        btn.disabled = false;
+      }
+    }
+
+    function showSuccess(msg) {
+      document.getElementById('form-state').style.display = 'none';
+      document.getElementById('success-msg').textContent = msg;
+      document.getElementById('success-box').classList.remove('hidden');
+    }
+
+    function showError(msg) {
+      const box = document.getElementById('error-box');
+      document.getElementById('error-msg').textContent = msg;
+      box.classList.remove('hidden');
+      box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function hideError() { document.getElementById('error-box').classList.add('hidden'); }
+
+    function togglePw(id, btn) {
+      const inp = document.getElementById(id);
+      const icon = btn.querySelector('i');
+      const hide = inp.type === 'password';
+      inp.type = hide ? 'text' : 'password';
+      icon.className = hide ? 'fa-regular fa-eye-slash' : 'fa-regular fa-eye';
+    }
+
+    function checkPasswordStrength(pw) {
+      const wrap = document.getElementById('strength-wrap');
+      const bar = document.getElementById('strength-bar');
+      const label = document.getElementById('strength-label');
+      if (!pw) { wrap.style.display = 'none'; return; }
+      wrap.style.display = 'block';
+      let s = 0;
+      if (pw.length >= 8) s++;
+      if (pw.length >= 12) s++;
+      if (/[A-Z]/.test(pw)) s++;
+      if (/[0-9]/.test(pw)) s++;
+      if (/[^A-Za-z0-9]/.test(pw)) s++;
+      const lvls = [
+        ['20%', '#DC2626', 'Very Weak'],
+        ['40%', '#F59E0B', 'Weak'],
+        ['60%', '#D97706', 'Fair'],
+        ['80%', '#16A34A', 'Strong'],
+        ['100%', '#15803D', 'Very Strong \u2713'],
+      ];
+      const l = lvls[Math.max(0, Math.min(s - 1, 4))];
+      bar.style.width = l[0]; bar.style.backgroundColor = l[1];
+      label.textContent = l[2]; label.style.color = l[1];
+    }
+  </script>
+</body>
+
+</html>
